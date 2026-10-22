@@ -1,0 +1,102 @@
+---
+import { ArrowUpRight, Clock3 } from '@lucide/astro';
+import type { Article } from '../content/articles';
+interface Props { articles: Article[] }
+const [lead, ...rest] = Astro.props.articles;
+const tones: Record<string, string> = { 'Процесс': 'steel', 'Управление': 'orange', 'Продукт': 'sky' };
+// Атмосферное фото можно кадрировать; скриншоты продукта показываем целиком (contain).
+const isPhoto = (a: Article) => a.cover === '/media/studio.webp';
+---
+<div class="journal" data-journal>
+  <article class="j-lead j-item">
+    <a href={`/blog/${lead.slug}/`} class="j-lead-link" aria-label={lead.title}>
+      {isPhoto(lead) ? <span class="ph ph--dark ph--fill ph--top j-lead-ph" role="img" aria-label={lead.alt}><span>Обложка · фото</span></span> : <img src={lead.cover} alt={lead.alt} loading="lazy" decoding="async" class="contain" />}
+      <span class="j-lead-shade" aria-hidden="true"></span>
+      <span class="j-lead-body">
+        <strong class="j-title">{lead.title}</strong>
+        <span class="j-excerpt">{lead.excerpt}</span>
+        <span class="j-read">Читать материал<span class="j-arrow"><ArrowUpRight size={18} /></span></span>
+      </span>
+    </a>
+  </article>
+  <div class="j-side">
+    {rest.map(a => (
+      <article class="j-card j-item">
+        <a href={`/blog/${a.slug}/`} class="j-card-link">
+          <span class:list={['j-thumb', `tone-${tones[a.category] ?? 'steel'}`]}>{isPhoto(a) ? <span class="ph ph--fill" role="img" aria-label={a.alt}><span>Фото</span></span> : <img src={a.cover} alt={a.alt} loading="lazy" decoding="async" class="contain" />}</span>
+          <span class="j-card-body">
+            <strong class="j-title">{a.title}</strong>
+            <span class="j-excerpt">{a.excerpt}</span>
+            <span class="j-arrow"><ArrowUpRight size={18} /></span>
+          </span>
+        </a>
+      </article>
+    ))}
+  </div>
+</div>
+
+<style>
+.journal{display:grid;grid-template-columns:1.15fr 1fr;gap:24px;align-items:stretch}
+.j-item{transition:opacity .6s ease,transform .6s ease}
+.journal:not(.is-visible) .j-item{opacity:0;transform:translateY(30px)}
+.j-lead-link{position:relative;display:block;height:100%;min-height:560px;border-radius:26px;overflow:hidden;background:var(--ink);isolation:isolate}
+.j-lead-ph{z-index:-2}
+.j-lead-link img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:70% center;transition:transform 1.2s ease;z-index:-2}
+.j-lead-link img.contain{object-fit:contain;background:#e6e6e6}
+.j-lead-link:hover img{transform:scale(1.04)}
+.j-lead-shade{position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,#17171700 30%,#171717cc 72%,#171717f2 100%)}
+.j-lead-body{position:absolute;left:0;right:0;bottom:0;padding:36px;display:flex;flex-direction:column;gap:14px;color:#ffffff}
+.j-lead .j-title{font-size:clamp(28px,2.6vw,38px);line-height:1.12;letter-spacing:-.04em;font-weight:600;max-width:560px}
+.j-lead .j-excerpt{color:#ffffffc4;font-size:15px;line-height:1.6;max-width:500px}
+.j-lead .j-time{color:#ffffffb3}
+.j-read{display:inline-flex;align-items:center;gap:14px;font-size:14px;font-weight:700;margin-top:6px}
+.j-read .j-arrow{position:static;background:#ffffff;color:var(--ink)}
+.j-side{display:grid;grid-template-rows:1fr 1fr auto;gap:24px}
+.j-card-link{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);height:100%;background:var(--paper);border:1px solid var(--line);border-radius:22px;overflow:hidden;transition:transform .3s,box-shadow .3s,border-color .3s}
+.j-card-link:hover{transform:translateY(-4px);box-shadow:0 24px 50px -30px #1717178c;border-color:#cbcbcb}
+.j-thumb{display:grid;place-items:center;padding:16px;min-height:200px}
+.j-thumb img{width:100%;border-radius:10px;box-shadow:0 14px 30px -18px #17171799;transition:transform .5s}
+.j-thumb img:not(.contain){height:100%;object-fit:cover}
+.j-thumb img.contain{height:auto;aspect-ratio:1.44;object-fit:contain;background:#ffffff}
+.j-card-link:hover .j-thumb img{transform:scale(1.03) rotate(-.6deg)}
+.j-card-body{position:relative;display:flex;flex-direction:column;gap:10px;padding:22px 22px 24px}
+.j-card .j-title{font-size:21px;line-height:1.22;letter-spacing:-.03em;font-weight:600;padding-right:10px}
+.j-card .j-excerpt{font-size:13px;line-height:1.6;color:var(--muted)}
+.j-card .j-arrow{margin-top:auto;align-self:flex-end}
+.j-meta{display:flex;align-items:center;gap:12px;font-size:11px}
+.j-cat{font-weight:800;text-transform:uppercase;letter-spacing:.08em;border-radius:99px;padding:5px 10px}
+.j-time{display:inline-flex;align-items:center;gap:5px;color:var(--muted)}
+.j-arrow{display:grid;place-items:center;width:40px;height:40px;border-radius:50%;border:1px solid var(--line);transition:transform .3s,background .3s,color .3s}
+.j-card-link:hover .j-arrow,.j-lead-link:hover .j-arrow{transform:rotate(45deg);background:var(--ink);color:#ffffff;border-color:var(--ink)}
+.tone-steel.j-thumb{background:#e6e6e6}.tone-orange.j-thumb{background:#eaeaea}.tone-sky.j-thumb{background:#ededed}
+.j-cat.tone-steel{background:#ebebeb;color:#616161}.j-cat.tone-orange{background:#ebebeb;color:#5a5a5a}.j-cat.tone-sky{background:#ebebeb;color:#585858}
+.j-lead .j-cat{background:#ffffff26;color:#ffffff;backdrop-filter:blur(6px)}
+.j-rubrics{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:18px 22px;border:1px dashed #b9b9b9;border-radius:18px}
+.j-rubrics-label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+.j-rubrics div{display:flex;gap:8px;flex-wrap:wrap}
+.j-rubrics div span{font-size:12px;font-weight:700;padding:6px 12px;border-radius:99px;background:#ffffff;border:1px solid var(--line)}
+.j-note{font-size:12px;color:var(--muted);margin-top:18px}
+@media(max-width:1100px){.journal{grid-template-columns:1fr}.j-lead-link{min-height:480px}}
+@media(max-width:760px){
+  .j-lead-link{min-height:440px;border-radius:22px}.j-lead-body{padding:24px}
+  .j-card-link{grid-template-columns:1fr}.j-thumb{min-height:0}
+  .j-card .j-title{font-size:20px}.j-rubrics{padding:16px}
+}
+@media(prefers-reduced-motion:reduce){.journal:not(.is-visible) .j-item{opacity:1;transform:none}}
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-journal]').forEach(root=>{
+    const items=[...root.querySelectorAll<HTMLElement>('.j-item')];
+    if(!('IntersectionObserver' in window)||window.matchMedia('(prefers-reduced-motion: reduce)').matches){root.classList.add('is-visible');return}
+    items.forEach((el,i)=>{el.style.transitionDelay=`${i*110}ms`});
+    const io=new IntersectionObserver(entries=>{
+      if(entries.some(e=>e.isIntersecting)){
+        root.classList.add('is-visible');
+        setTimeout(()=>items.forEach(el=>{el.style.transitionDelay=''}),1000);
+        io.disconnect();
+      }
+    },{threshold:.15});
+    io.observe(root);
+  });
+</script>

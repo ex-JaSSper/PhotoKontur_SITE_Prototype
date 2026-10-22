@@ -1,0 +1,1 @@
+var e={plan:{label:`Планируется`,tag:`p-tag_plan`},processing:{label:`В обработке`,tag:`p-tag_processing`},done:{label:`Проведена`,tag:`p-tag_done`},cancel:{label:`Отменена`,tag:`p-tag_cancel`}};export{e as t};

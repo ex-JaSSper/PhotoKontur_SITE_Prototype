@@ -1,0 +1,110 @@
+---
+// Расчёты и выплаты: как оплата заказа становится деньгами на счёте студии.
+// Источник — спецификация «Финансы» (fotokontur-main/docs/Финансы.docx) и кабинет:
+// поступление → удержание процента сервиса → баланс компании → автоматическая выплата на реквизиты.
+// Размер процента и сроки не публикуем: они фиксируются в договоре.
+import { ArrowUpRight, ArrowRight, Wallet, Landmark, ReceiptText } from '@lucide/astro';
+
+const steps = [
+  { icon: ReceiptText, k: '01', t: 'Оплата заказа поступает в сервис', p: 'Родители оплачивают заказы онлайн — картой или через СБП. Каждое поступление сразу видно в истории операций с номером заказа.' },
+  { icon: Wallet, k: '02', t: 'Начисление на баланс студии', p: 'С каждой оплаты начисляется процент сервиса, остальное поступает на баланс компании. В деталях операции видно, сколько поступило и сколько зачислено.' },
+  { icon: Landmark, k: '03', t: 'Выплата на ваш расчётный счёт', p: 'С баланса деньги автоматически уходят на расчётный счёт студии — вручную ничего выводить не нужно.' },
+];
+---
+<section class="acq" id="acquiring" aria-labelledby="acq-title">
+  <div class="wrap">
+    <div class="acq-head">
+      <div>
+        <p class="acq-kicker">Расчёты и выплаты</p>
+        <h2 id="acq-title">Как оплата заказа<br/><em>становится деньгами на счёте.</em></h2>
+      </div>
+      <p class="acq-lead">Деньги за заказы собираются на балансе студии в ФотоКонтур и по расписанию уходят на ваш расчётный счёт. Сервис берёт процент с оплат — он учитывается автоматически, ничего считать вручную не нужно.</p>
+    </div>
+
+    <ol class="acq-steps">
+      {steps.map((s, i) => (
+        <li>
+          <span class="acq-step-top"><span class="acq-step-icon"><s.icon size={24}/></span></span>
+          <h3>{s.t}</h3>
+          <p>{s.p}</p>
+          {i < steps.length - 1 && <ArrowRight class="acq-step-arrow" size={22} aria-hidden="true"/>}
+        </li>
+      ))}
+    </ol>
+
+    <div class="acq-detail">
+      <div class="acq-team">
+        <span class="acq-team-icon"><Landmark size={24}/></span>
+        <div>
+          <h3>Выплаты по расписанию</h3>
+          <p>Выберите, как часто выводить деньги на счёт, — раз в день, неделю или месяц. Дата следующей выплаты рассчитывается автоматически, реквизиты указываются один раз в настройках компании.</p>
+        </div>
+      </div>
+
+      <figure class="acq-payout" aria-label="Пример настройки выплат в кабинете">
+        <figcaption>Настройка выплат в кабинете</figcaption>
+        <div class="acq-payout-row">
+          <span class="acq-payout-label">Периодичность</span>
+          <span class="acq-chips"><span>Раз в день</span><span class="is-on">Раз в неделю</span><span>Раз в месяц</span></span>
+        </div>
+        <div class="acq-payout-row">
+          <span class="acq-payout-label">Следующая выплата</span>
+          <span class="acq-payout-value">Рассчитывается автоматически</span>
+        </div>
+        <div class="acq-payout-row">
+          <span class="acq-payout-label">Реквизиты</span>
+          <span class="acq-payout-value">Расчётный счёт студии</span>
+        </div>
+      </figure>
+    </div>
+
+    <p class="acq-foot">Размер процента и условия выплат фиксируются в договоре при подключении. Наличные, принятые в учреждении, тоже отражаются в сервисе. <a href="/faq/#work">Вопросы о расчётах</a> · <a href="#question">Обсудить условия<ArrowUpRight size={14}/></a></p>
+  </div>
+</section>
+
+<style>
+.acq{position:relative;background:#181818;color:#ffffff;padding:67px 0 58px}
+.acq-head{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:32px 64px;align-items:end}
+.acq-kicker{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#a3a3a3;margin-bottom:20px}
+.acq h2{font-size:clamp(28px,2.99vw,44px);line-height:1.02;letter-spacing:-.045em;color:#ffffff}
+.acq h2 em{font-style:normal;color:#9c9c9c}
+.acq-lead{font-size:18px;line-height:1.6;color:#c7c7c7;max-width:520px}
+
+.acq-steps{list-style:none;margin:64px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.acq-steps li{position:relative;padding:28px;border-radius:22px;background:#222222;border:1px solid #303030;display:flex;flex-direction:column;gap:14px}
+.acq-step-top{display:flex;justify-content:space-between;align-items:center}
+.acq-step-icon{display:grid;place-items:center;width:52px;height:52px;border-radius:15px;background:#2e2e2e;color:#ffffff}
+.acq-step-k{font-size:13px;font-weight:700;letter-spacing:.08em;color:#8a8a8a}
+.acq-steps h3{font-size:22px;line-height:1.2;letter-spacing:-.025em;color:#ffffff;margin-top:8px}
+.acq-steps p{font-size:15px;line-height:1.6;color:#b5b5b5}
+:global(.acq-step-arrow){position:absolute;right:-21px;top:50%;transform:translateY(-50%);z-index:1;color:#7a7a7a;background:#181818;border-radius:50%;padding:2px}
+
+.acq-detail{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px;margin-top:20px}
+.acq-team{display:flex;gap:18px;padding:28px;border-radius:22px;border:1px solid #303030}
+.acq-team-icon{flex:none;display:grid;place-items:center;width:52px;height:52px;border-radius:15px;background:#2e2e2e;color:#ffffff}
+.acq-team h3{font-size:20px;letter-spacing:-.02em;color:#ffffff;margin-bottom:8px}
+.acq-team p{font-size:15px;line-height:1.6;color:#b5b5b5}
+
+.acq-payout{margin:0;padding:24px 28px;border-radius:22px;background:#ffffff;color:#141414;display:grid;gap:4px}
+.acq-payout figcaption{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#6b6b6b;margin-bottom:8px}
+.acq-payout-row{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:12px 0;border-top:1px solid #e3e3e3;flex-wrap:wrap}
+.acq-payout-label{font-size:14px;color:#6b6b6b}
+.acq-payout-value{font-size:15px;font-weight:700}
+.acq-chips{display:flex;gap:6px;flex-wrap:wrap}
+.acq-chips span{font-size:13px;font-weight:700;padding:7px 12px;border-radius:999px;background:#f0f0f0;color:#5c5c5c}
+.acq-chips .is-on{background:#141414;color:#ffffff}
+
+.acq-foot{margin-top:28px;font-size:14px;line-height:1.6;color:#9c9c9c;max-width:860px}
+.acq-foot a{color:#ffffff;text-decoration:underline;text-underline-offset:3px;display:inline-flex;align-items:center;gap:4px}
+
+@media(max-width:1000px){
+  .acq-head,.acq-detail{grid-template-columns:1fr}
+  .acq-steps{grid-template-columns:1fr}
+  :global(.acq-step-arrow){display:none}
+}
+@media(max-width:760px){
+  .acq{padding:43px 0 38px}
+  .acq-steps li,.acq-team,.acq-payout{padding:22px}
+  .acq-steps{margin-top:40px}
+}
+</style>

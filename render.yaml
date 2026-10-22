@@ -1,0 +1,10 @@
+# Render Blueprint: статический сайт ФотоКонтур
+services:
+  - type: web
+    name: photokontur-site
+    runtime: static
+    buildCommand: corepack enable && pnpm install --frozen-lockfile && pnpm build
+    staticPublishPath: ./dist
+    envVars:
+      - key: NODE_VERSION
+        value: "22.12.0"

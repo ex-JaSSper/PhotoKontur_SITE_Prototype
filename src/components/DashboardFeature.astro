@@ -1,0 +1,64 @@
+---
+import {ArrowUpRight, ChartNoAxesCombined, Target, Images, UsersRound, Expand} from '@lucide/astro';
+
+const signals = [
+  {icon:ChartNoAxesCombined, title:'Средний чек', text:'Смотрите, как меняется стоимость заказа, вместе с выручкой и числом заказов.'},
+  {icon:Target, title:'План продаж', text:'Сопоставляйте результат с планом за месяц и замечайте отклонения вовремя.'},
+  {icon:Images, title:'Топ тематик', text:'Понимайте, какие съёмки востребованы и что стоит предложить клиентам снова.'},
+  {icon:UsersRound, title:'Топ фотографов', text:'В кабинете руководителя сравнивайте результаты команды на одном экране.'},
+];
+---
+<section class="dashboard-feature" id="dashboard" aria-labelledby="dashboard-title">
+  <div class="wrap dashboard-layout">
+    <div class="dashboard-copy">
+      <span class="eyebrow">Аналитика</span>
+      <h2 id="dashboard-title">Студия видна<br/><em>в цифрах.</em></h2>
+      <p class="dashboard-lead">Дашборд собирает показатели в одном месте. Оценивайте результат за период, находите сильные направления и принимайте решения о следующих съёмках на основе данных.</p>
+      <div class="dashboard-signals" aria-label="Что показывает дашборд">
+        {signals.map(({icon:Icon,title,text}) => <div class="dashboard-signal"><span class="signal-icon"><Icon size={25} strokeWidth={1.9}/></span><div><h3>{title}</h3><p>{text}</p></div></div>)}
+      </div>
+    </div>
+    <div class="dashboard-visual">
+      <figure class="dashboard-screen">
+        <div class="dashboard-window-bar"><span></span><span></span><span></span><b>Дашборд</b></div>
+        <a class="dashboard-image-link" href="/media/dashboard.webp" target="_blank" rel="noopener" aria-label="Открыть полный снимок дашборда ФотоКонтур в новой вкладке">
+          <img src="/media/dashboard.webp" alt="Экран дашборда ФотоКонтур: выручка, количество заказов, средний чек и топ компаний" width="1440" height="1000" loading="lazy" decoding="async" />
+        </a>
+        <figcaption><span>Интерфейс суперадминистратора. Показатели на снимке демонстрационные. План и топ фотографов доступны в кабинете руководителя.</span></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+<style>
+.dashboard-feature{position:relative;overflow:hidden;background:#fbfbfb;color:#1c1c1c;padding:60px 0 66px;isolation:isolate}
+.dashboard-feature:before{content:"";position:absolute;width:800px;height:800px;right:-300px;top:-280px;border-radius:50%;background:radial-gradient(circle,#e1e1e1 0%,#f2f2f2 45%,transparent 72%);z-index:-1}
+.dashboard-layout{display:grid;grid-template-columns:minmax(0,1.03fr) minmax(0,.97fr);gap:clamp(45px,5vw,85px);align-items:center}
+.dashboard-copy{min-width:0}.dashboard-copy .eyebrow{color:#6f6f6f;margin-bottom:27px}
+.dashboard-copy h2{font-size:clamp(38px,3.74vw,56px);letter-spacing:-.066em;line-height:1.02;margin-bottom:29px}
+.dashboard-copy h2 em{font-style:normal;color:#868686}
+.dashboard-lead{max-width:585px;font-size:20px;line-height:1.63;color:#4f4f4f}
+.dashboard-signals{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 23px;margin-top:39px;border-top:1px solid #d8d8d8}
+.dashboard-signal{display:flex;align-items:flex-start;gap:13px;padding:21px 0 19px;border-bottom:1px solid #d8d8d8;min-width:0}
+.signal-icon{display:grid;place-items:center;flex:none;width:42px;height:42px;border-radius:12px;background:#eeeeee;color:#727272}
+.dashboard-signal h3{font-size:17px;letter-spacing:-.03em;margin:0 0 5px;line-height:1.25}
+.dashboard-signal p{font-size:13px;line-height:1.53;color:#686868}
+.dashboard-more{display:inline-flex;align-items:center;gap:11px;margin-top:28px;padding-bottom:7px;border-bottom:1px solid #6e6e6e;color:#5f5f5f;font-weight:800;font-size:14px}
+.dashboard-more:hover{color:#404040}
+.dashboard-visual{position:relative;min-width:0;padding-top:32px}
+.dashboard-visual-label{display:flex;align-items:center;gap:10px;margin-bottom:17px;font-size:11px;letter-spacing:.13em;text-transform:uppercase;font-weight:800;color:#767676}
+.live-dot{width:7px;height:7px;border-radius:50%;background:#a2a2a2;box-shadow:0 0 0 5px #a2a2a227}
+.dashboard-screen{position:relative;margin:0;background:#ffffff;border:1px solid #d8d8d8;border-radius:18px;overflow:hidden;box-shadow:0 30px 70px #5e5e5e23,0 4px 12px #5e5e5e0f}
+.dashboard-window-bar{height:29px;display:flex;align-items:center;gap:5px;padding:0 13px;background:#fafafa;border-bottom:1px solid #ececec}
+.dashboard-window-bar span{width:5px;height:5px;border-radius:50%;background:#c9c9c9}
+.dashboard-window-bar b{margin-left:auto;font-size:9px;font-weight:600;color:#7e7e7e}
+.dashboard-image-link{display:block;position:relative;line-height:0}
+.dashboard-image-link img{display:block;width:100%;height:auto;max-width:100%;object-fit:contain;aspect-ratio:1440/1000}
+.dashboard-screen figcaption{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:13px 16px 15px;font-size:11px;line-height:1.5;color:#747474}
+.dashboard-screen figcaption a{display:inline-flex;align-items:center;gap:7px;flex:none;color:#5e5e5e;font-size:12px;font-weight:800}
+.dashboard-screen figcaption a:hover{text-decoration:underline}
+.dashboard-visual-foot{display:flex;align-items:center;justify-content:center;gap:11px;margin-top:31px;color:#838383;text-transform:uppercase;letter-spacing:.11em;font-size:10px;font-weight:800}
+.dashboard-visual-foot i{height:1px;width:15px;background:#cfcfcf}
+@media(max-width:1050px){.dashboard-layout{gap:35px}.dashboard-copy h2{font-size:39px}.dashboard-lead{font-size:18px}.dashboard-signals{gap:0 14px}.dashboard-signal{gap:9px}.signal-icon{width:36px;height:36px}.dashboard-signal h3{font-size:15px}.dashboard-signal p{font-size:12px}}
+@media(max-width:800px){.dashboard-feature{padding:42px 0 45px}.dashboard-layout{grid-template-columns:minmax(0,1fr);gap:35px}.dashboard-copy h2{font-size:clamp(33px,5.44vw,46px)}.dashboard-lead{max-width:680px}.dashboard-visual{padding-top:0;max-width:700px}.dashboard-visual-foot{margin-top:20px}}
+@media(max-width:560px){.dashboard-feature{padding:37px 0 40px}.dashboard-copy h2{font-size:clamp(33px,8.16vw,41px);margin-bottom:21px}.dashboard-lead{font-size:17px}.dashboard-signals{grid-template-columns:minmax(0,1fr);margin-top:29px}.dashboard-signal{gap:14px;padding:15px 0}.signal-icon{width:43px;height:43px}.dashboard-signal h3{font-size:17px}.dashboard-signal p{font-size:13px}.dashboard-visual-label{font-size:9px}.dashboard-visual-foot{flex-wrap:wrap;font-size:9px}.dashboard-screen figcaption{align-items:flex-start;flex-direction:column;gap:8px;font-size:10px}}
+</style>

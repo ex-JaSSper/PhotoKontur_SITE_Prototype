@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.astro/
+qa/
+# сгенерированные изображения больше не используются на сайте
+public/media/*.png
+public/media/acquiring-guilloche.webp
+public/media/case-*.webp
+public/media/hero-studio-v2.webp
+public/media/portrait.webp
+public/media/studio.webp
+public/media/vk-vision-face-recognition.webp
+public/media/vision/
+!public/media/parent-albums.png

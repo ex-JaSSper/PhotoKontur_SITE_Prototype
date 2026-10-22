@@ -1,0 +1,6 @@
+---
+const {src,alt,caption='Интерфейс ФотоКонтур. Демонстрационные данные.',class:cls=''}=Astro.props;
+const size=[1440,1000];
+---
+<figure class:list={['product',cls]}><div class="product-top"><span></span><span></span><span></span><b>Рабочее пространство ФотоКонтур</b></div><div class="product-image" ><a href={src} target="_blank" rel="noopener" aria-label="Открыть полный снимок интерфейса"><img src={src} alt={alt} width={size[0]} height={size[1]} decoding="async"/></a></div><figcaption>{caption}</figcaption></figure>
+<style>.product{min-width:0;border-radius:20px;overflow:hidden;border:1px solid #d4d4d4;background:white;box-shadow:0 22px 60px #43434310}.product-top{display:flex;gap:5px;padding:12px 16px;border-bottom:1px solid var(--line)}.product-top span{height:5px;width:5px;border-radius:50%;background:#c4c4c4}.product-top b{font-size:10px;font-weight:500;color:var(--muted);margin-left:auto}.product-image{overflow:auto;width:100%;min-width:0;max-width:100%}.product img{width:100%;height:auto;object-fit:contain;aspect-ratio:1.44}.product-image a{display:block}.product figcaption a{display:block;font-weight:700;margin-top:7px;color:#616161}.product figcaption a:hover{text-decoration:underline}.product figcaption{font-size:11px;padding:12px 18px;color:var(--muted);line-height:1.5}</style>

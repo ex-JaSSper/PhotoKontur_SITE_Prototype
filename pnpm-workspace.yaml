@@ -1,0 +1,4 @@
+minimumReleaseAgeExclude:
+  - '@lucide/astro@1.49.0'
+allowBuilds:
+  esbuild: true

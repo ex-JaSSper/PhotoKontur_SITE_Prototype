@@ -1,0 +1,58 @@
+---
+import { ArrowUpRight, Clock3 } from '@lucide/astro';
+import { type Article, toneOf, isPhotoCover } from '../content/articles';
+interface Props { article: Article; featured?: boolean }
+const { article: a, featured = false } = Astro.props;
+const tone = toneOf(a.category);
+const photo = isPhotoCover(a);
+---
+<article class:list={['ac', `tone-${tone}`, { 'ac-featured': featured }]} data-category={a.category}>
+  <a href={`/blog/${a.slug}/`} class="ac-link">
+    <span class:list={['ac-cover', { 'ac-cover-photo': photo }]}>
+      {photo ? <span class="ph ph--fill" role="img" aria-label={a.alt}><span>Обложка · фото</span></span> : <img src={a.cover} alt={a.alt} loading={featured ? 'eager' : 'lazy'} decoding="async" />}
+    </span>
+    <span class="ac-body">
+      <strong class="ac-title">{a.title}</strong>
+      <span class="ac-excerpt">{a.excerpt}</span>
+      <span class="ac-foot"><span class="ac-date">Редакция ФотоКонтур · {a.preparedAt}</span><span class="ac-arrow"><ArrowUpRight size={18} /></span></span>
+    </span>
+  </a>
+</article>
+
+<style>
+.ac{min-width:0}
+.ac-link{display:flex;flex-direction:column;height:100%;background:var(--paper);border:1px solid var(--line);border-radius:22px;overflow:hidden;transition:transform .3s,box-shadow .3s,border-color .3s}
+.ac-link:hover{transform:translateY(-5px);box-shadow:0 28px 56px -34px #17171799;border-color:#cbcbcb}
+.ac-cover{position:relative;display:grid;place-items:center;padding:16px;aspect-ratio:1.5;overflow:hidden}
+.tone-steel .ac-cover{background:#e6e6e6}.tone-orange .ac-cover{background:#eaeaea}.tone-sky .ac-cover{background:#ededed}
+.ac-cover img{width:100%;height:auto;aspect-ratio:1.44;object-fit:contain;background:#ffffff;border-radius:8px;box-shadow:0 1px 2px #1717170f,0 6px 16px -12px #17171747;transition:transform .6s}
+.ac-cover-photo{padding:0}
+.ac-cover-photo img{height:100%;aspect-ratio:auto;object-fit:cover;object-position:70% center;border-radius:0;box-shadow:none}
+.ac-link:hover .ac-cover img{transform:scale(1.02)}
+.ac-badge{position:absolute;left:18px;top:18px;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#ffffff;background:#171717b3;backdrop-filter:blur(8px);border-radius:99px;padding:7px 12px}
+.ac-body{flex:1;display:flex;flex-direction:column;gap:12px;padding:22px 24px 22px}
+.ac-meta{display:flex;align-items:center;gap:12px;font-size:11px}
+.ac-cat{font-weight:800;text-transform:uppercase;letter-spacing:.08em;border-radius:99px;padding:5px 10px}
+.tone-steel .ac-cat{background:#ebebeb;color:#616161}.tone-orange .ac-cat{background:#ebebeb;color:#5a5a5a}.tone-sky .ac-cat{background:#ebebeb;color:#585858}
+.ac-time{display:inline-flex;align-items:center;gap:5px;color:var(--muted)}
+.ac-title{font-size:23px;line-height:1.2;letter-spacing:-.035em;font-weight:600}
+.ac-excerpt{font-size:14px;line-height:1.6;color:var(--muted)}
+.ac-foot{margin-top:auto;padding-top:10px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.ac-date{font-size:11px;color:var(--muted)}
+.ac-arrow{display:grid;place-items:center;width:40px;height:40px;flex:none;border-radius:50%;border:1px solid var(--line);transition:transform .3s,background .3s,color .3s,border-color .3s}
+.ac-link:hover .ac-arrow{transform:rotate(45deg);background:var(--ink);border-color:var(--ink);color:#ffffff}
+
+.ac-featured{grid-column:1/-1}
+.ac-featured .ac-link{display:grid;grid-template-columns:1.25fr 1fr;background:var(--ink);border-color:var(--ink);color:#ffffff}
+.ac-featured .ac-cover{aspect-ratio:auto;min-height:440px}
+.ac-featured .ac-body{justify-content:center;padding:32px 48px;gap:16px}
+.ac-featured .ac-title{font-size:clamp(30px,3vw,44px);line-height:1.08}
+.ac-featured .ac-excerpt{font-size:16px;color:#ffffffb3}
+.ac-featured .ac-cat{background:#ffffff1f;color:#ffffff}
+.ac-featured .ac-time,.ac-featured .ac-date{color:#ffffff99}
+.ac-featured .ac-foot{margin-top:18px}
+.ac-featured .ac-arrow{border-color:#ffffff40;width:48px;height:48px}
+.ac-featured .ac-link:hover .ac-arrow{background:var(--orange);border-color:var(--orange)}
+@media(max-width:900px){.ac-featured .ac-link{grid-template-columns:1fr}.ac-featured .ac-cover{min-height:280px}.ac-featured .ac-body{padding:28px}}
+@media(max-width:760px){.ac-body{padding:18px 18px 20px}.ac-title{font-size:21px}.ac-cover{padding:14px}.ac-featured .ac-cover{min-height:240px}}
+</style>

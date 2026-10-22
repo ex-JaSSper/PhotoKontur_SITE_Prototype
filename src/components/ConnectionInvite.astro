@@ -1,0 +1,72 @@
+---
+import {ArrowUpRight, PhoneCall, MessageCircleMore, Camera, CalendarDays, Images, ShoppingBag} from '@lucide/astro';
+---
+<section class="connection" id="connection" aria-labelledby="connection-title">
+  <div class="wrap connection-layout">
+    <div class="connection-copy">
+      <span class="eyebrow">Давайте знакомиться</span>
+      <h2 id="connection-title">У вашей студии<br/>свой ритм.<br/><em>Поговорим о нём.</em></h2>
+      <p>Начнём с вашей рабочей ситуации: как вы готовите съёмки, передаёте фотографии родителям и следите за заказами. Так будет проще обсудить подходящий сценарий в ФотоКонтур.</p>
+      <div class="connection-actions">
+        <a class="connection-action connection-action-main" href="#apply"><MessageCircleMore size={19}/>Заявка на модерацию<ArrowUpRight size={18}/></a>
+        <a class="connection-action connection-action-call" href="#question"><PhoneCall size={19}/>Запросить звонок<ArrowUpRight size={18}/></a>
+      </div>
+      <a class="connection-faq" href="/faq/">Вопросы о подключении <ArrowUpRight size={16}/></a>
+      <p class="connection-note">Формы пока работают в демонстрационном режиме: обращения не отправляются.</p>
+    </div>
+    <div class="connection-scene" aria-label="Темы для разговора о работе фотостудии">
+      <div class="connection-scene-top"><span class="scene-hello"><MessageCircleMore size={25}/></span><div><small>ЗНАКОМСТВО СО СТУДИЕЙ</small><strong>С чего начнём разговор?</strong></div><span class="scene-dots"><i></i><i></i><i></i></span></div>
+      <div class="conversation-list">
+        <div class="conversation-item"><span><CalendarDays size={22}/></span><div><small>ПОДГОТОВКА</small><strong>Как сейчас планируете съёмки?</strong></div></div>
+        <div class="conversation-item"><span><Images size={22}/></span><div><small>РАБОТА С ФОТО</small><strong>Как родители выбирают кадры?</strong></div></div>
+        <div class="conversation-item"><span><ShoppingBag size={22}/></span><div><small>РЕЗУЛЬТАТ</small><strong>Где видите заказы и расчёты?</strong></div></div>
+      </div>
+      <div class="scene-footer"><span><Camera size={18}/>ФотоКонтур</span><p>Разберём процесс вашей студии на конкретных задачах.</p></div>
+      <div class="scene-orbit" aria-hidden="true"></div>
+    </div>
+  </div>
+</section>
+<style>
+.connection{position:relative;overflow:hidden;background:#f0f0f0;color:#252525;padding:63px 0 65px;isolation:isolate}
+.connection:before{content:"";position:absolute;right:-160px;bottom:-410px;width:770px;height:770px;border-radius:50%;background:radial-gradient(circle,#d8d8d8 0%,#e6e6e6 43%,transparent 72%);z-index:-1}
+.connection:after{content:"";position:absolute;left:-240px;top:-340px;width:680px;height:680px;border-radius:50%;background:radial-gradient(circle,#f6f6f6 0%,transparent 68%);z-index:-1}
+.connection-layout{display:grid;grid-template-columns:minmax(0,.98fr) minmax(0,1.02fr);gap:clamp(55px,7vw,115px);align-items:center}
+.connection-copy{min-width:0}.connection-copy .eyebrow{color:#7b7b7b;margin-bottom:30px}
+.connection h2{font-size:clamp(35px,3.6vw,52px);line-height:1.04;letter-spacing:-.065em}
+.connection h2 em{font-style:normal;color:#868686}
+.connection-copy>p:not(.connection-note){font-size:19px;line-height:1.68;color:#5b5b5b;max-width:570px;margin-top:28px}
+.connection-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:35px}
+.connection-action{min-height:54px;display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:14px 17px;border:1px solid #afafaf;border-radius:11px;color:#494949;font-size:13px;font-weight:800;line-height:1.3;transition:transform .25s ease,background .25s ease,border-color .25s ease,box-shadow .25s ease}
+.connection-action:hover{transform:translateY(-3px);box-shadow:0 10px 22px #5d5d5d19}
+.connection-action svg:last-child{width:16px;margin-left:4px}
+.connection-action-main{background:#e6e6e6;border-color:#b9b9b9}
+.connection-action-main:hover{background:#d9d9d9;border-color:#a1a1a1}
+.connection-action-call{background:#ffffffa8}
+.connection-action-call:hover{background:#ffffff}
+.connection-faq{display:inline-flex;gap:9px;align-items:center;margin-top:27px;border-bottom:1px solid #787878;padding-bottom:5px;font-size:12px;font-weight:700;color:#6d6d6d}
+.connection-faq:hover{color:#434343}
+.connection-note{max-width:550px;font-size:11px;line-height:1.6;color:#7b7b7b;margin-top:22px}
+.connection-scene{position:relative;min-width:0;padding:27px;border-radius:25px;border:1px solid #cdcdcd;background:#fafafaea;box-shadow:0 28px 65px #6e6e6e1c,0 4px 15px #5e5e5e0a;isolation:isolate}
+.connection-scene-top{display:flex;align-items:center;gap:15px;position:relative;z-index:1;padding:3px 2px 24px;border-bottom:1px solid #e2e2e2}
+.scene-hello{flex:none;width:54px;height:54px;display:grid;place-items:center;background:#747474;border-radius:16px;color:#ffffff;box-shadow:0 8px 20px #7a7a7a2c}
+.connection-scene-top>div{flex:1;min-width:0}
+.connection-scene-top small{display:block;font-size:10px;letter-spacing:.12em;font-weight:800;color:#898989}
+.connection-scene-top strong{display:block;font-size:20px;letter-spacing:-.04em;line-height:1.3;margin-top:3px}
+.scene-dots{display:flex;gap:4px;align-self:flex-start;padding-top:7px}.scene-dots i{width:5px;height:5px;background:#cacaca;border-radius:50%}
+.conversation-list{display:grid;gap:12px;margin:22px 0 26px}
+.conversation-item{position:relative;z-index:1;display:flex;gap:16px;align-items:center;padding:17px 19px;background:#ffffff;border:1px solid #e3e3e3;border-radius:13px;box-shadow:0 8px 18px #6363630c;transition:transform .3s ease,box-shadow .3s ease}
+.conversation-item:hover{transform:translateX(5px);box-shadow:0 12px 22px #6363631b}
+.conversation-item:nth-child(2){margin-left:24px}
+.conversation-item:nth-child(3){margin-left:48px}
+.conversation-item>span{width:44px;height:44px;flex:none;display:grid;place-items:center;color:#757575;background:#efefef;border-radius:12px}
+.conversation-item small{display:block;color:#929292;font-size:9px;letter-spacing:.13em;font-weight:800}
+.conversation-item strong{display:block;font-size:15px;line-height:1.35;letter-spacing:-.02em;margin-top:4px}
+.scene-footer{display:flex;align-items:center;justify-content:space-between;gap:18px;padding-top:18px;border-top:1px solid #e2e2e2;position:relative;z-index:1}
+.scene-footer span{display:flex;gap:7px;align-items:center;color:#717171;font-size:12px;font-weight:800}
+.scene-footer p{font-size:11px;color:#818181;text-align:right;line-height:1.5}
+.scene-orbit{position:absolute;width:300px;height:300px;right:-95px;bottom:-120px;border:1px solid #adadad50;border-radius:50%;z-index:-1;box-shadow:0 0 0 35px #c1c1c114,0 0 0 70px #c1c1c10b}
+@media(max-width:1050px){.connection-layout{gap:42px}.connection h2{font-size:39px}.connection-copy>p:not(.connection-note){font-size:17px}.connection-scene{padding:20px}.connection-action{font-size:12px;padding-inline:13px}}
+@media(max-width:800px){.connection{padding:44px 0}.connection-layout{grid-template-columns:minmax(0,1fr);gap:40px}.connection h2{font-size:clamp(33px,5.44vw,46px)}.connection-copy>p:not(.connection-note){max-width:660px}.connection-scene{max-width:680px}}
+@media(max-width:560px){.connection{padding:38px 0}.connection-copy .eyebrow{margin-bottom:22px}.connection h2{font-size:clamp(29px,7.48vw,39px)}.connection-copy>p:not(.connection-note){font-size:16px;margin-top:22px}.connection-actions{margin-top:28px;gap:9px}.connection-action{width:100%;justify-content:flex-start;padding:12px 15px}.connection-action svg:last-child{margin-left:auto}.connection-scene{padding:16px;border-radius:18px}.connection-scene-top{gap:11px}.scene-hello{width:44px;height:44px;border-radius:12px}.connection-scene-top strong{font-size:17px}.connection-scene-top small{font-size:8px}.conversation-list{gap:10px;margin:16px 0 20px}.conversation-item,.conversation-item:nth-child(2),.conversation-item:nth-child(3){margin-left:0}.conversation-item{gap:11px;padding:12px}.conversation-item>span{width:38px;height:38px}.conversation-item strong{font-size:13px}.scene-footer{align-items:flex-start;flex-direction:column;gap:6px}.scene-footer p{text-align:left}}
+@media(prefers-reduced-motion:reduce){.connection-action,.conversation-item{transition:none}}
+</style>

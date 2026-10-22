@@ -1,0 +1,55 @@
+---
+// Преимущество: печать фотографий через сервис. Цена и сроки — из раздела «Печать фото в сервисе»
+// кабинета (fotokontur-main/frontend/src/pages/print-service): 10×15 — 35 ₽, срок 3–5 рабочих дней.
+import { Printer, Wallet, PackageCheck, ArrowUpRight } from '@lucide/astro';
+const points = [
+  { icon: Printer, t: 'Не нужен свой подрядчик', p: 'Не придётся искать типографию или покупать оборудование: фотографии печатает ФотоКонтур.' },
+  { icon: Wallet, t: 'Оплата с баланса студии', p: 'Заказ на печать оплачивается с баланса компании в кабинете — без отдельных счетов.' },
+  { icon: PackageCheck, t: 'Готовый заказ в доставке', p: 'Сервис печатает, упаковывает и передаёт заказ в доставку. Статус виден в разделе «Заказы».' },
+];
+---
+<section class="section print" aria-labelledby="print-title">
+  <div class="wrap print-layout">
+    <div class="print-copy">
+      <span class="eyebrow">Печать в сервисе</span>
+      <h2 id="print-title">Заказы родителей —<br/>сразу на печать.</h2>
+      <p class="lead">Руководитель отправляет фотографии на печать прямо из кабинета: из альбома или карточки учреждения. Искать исполнителя и согласовывать заказ на стороне не нужно.</p>
+      <ul class="print-points">
+        {points.map((x) => (
+          <li><span class="print-icon"><x.icon size={22}/></span><div><strong>{x.t}</strong><p>{x.p}</p></div></li>
+        ))}
+      </ul>
+    </div>
+    <aside class="print-price" aria-label="Стоимость печати">
+      <span class="print-price-label">Фото 10×15</span>
+      <strong class="print-price-value">от 35 ₽</strong>
+      <span class="print-price-note">за отпечаток</span>
+      <dl>
+        <div><dt>Срок</dt><dd>3–5 рабочих дней</dd></div>
+        <div><dt>Форматы</dt><dd>от 10×15 до 30×45</dd></div>
+      </dl>
+      <a class="btn" href="/how-it-works/">Посмотреть в демо<ArrowUpRight size={17}/></a>
+    </aside>
+  </div>
+</section>
+
+<style>
+.print-layout{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(280px,.8fr);gap:48px;align-items:start}
+.print-copy h2{font-size:clamp(28px,2.92vw,44px)}
+.print-copy .lead{margin-top:18px;max-width:620px}
+.print-points{list-style:none;margin:28px 0 0;padding:0;display:grid;gap:12px}
+.print-points li{display:flex;gap:16px;padding:18px 20px;background:var(--paper);border:1px solid var(--line);border-radius:18px}
+.print-icon{flex:none;display:grid;place-items:center;width:44px;height:44px;border-radius:12px;background:var(--bg);color:var(--ink)}
+.print-points strong{display:block;font-size:17px;letter-spacing:-.01em;margin-bottom:4px}
+.print-points p{font-size:15px;line-height:1.55;color:var(--muted)}
+.print-price{position:sticky;top:110px;display:grid;gap:6px;padding:32px;border-radius:24px;background:var(--ink);color:#ffffff}
+.print-price-label{font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#bdbdbd}
+.print-price-value{font-size:clamp(44px,4.4vw,64px);line-height:1;letter-spacing:-.04em}
+.print-price-note{font-size:14px;color:#bdbdbd}
+.print-price dl{margin:18px 0 20px;display:grid;gap:0;border-top:1px solid #3a3a3a}
+.print-price dl div{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid #3a3a3a;font-size:14px}
+.print-price dt{color:#bdbdbd}
+.print-price dd{margin:0;font-weight:700}
+.print-price .btn{justify-self:start;background:#ffffff;color:#141414}
+@media(max-width:900px){.print-layout{grid-template-columns:1fr}.print-price{position:static}}
+</style>

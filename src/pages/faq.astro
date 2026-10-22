@@ -1,0 +1,150 @@
+---
+import Base from '../layouts/BaseLayout.astro';
+// Ответы — только о сверенных возможностях (см. ../fotokontur-site/docs/CLAIMS.md); тарифы, сроки и юридические формулировки не обещаем.
+// Оформление намеренно без иконок и карточек-стикеров: типографика, нумерация, линии.
+const groups = [
+  { title: 'Знакомство и подключение', id: 'start', items: [
+    ['Для кого создан ФотоКонтур?', 'Для фотографов и фотостудий, которые снимают в школах и детских садах: съёмки, альбомы, заказы и отчёты собраны в одном рабочем пространстве. У родителей — свой отдельный кабинет для выбора фотографий.'],
+    ['Кто может подключиться?', 'Одиночные фотографы и студии. Чаще всего это ИП или самозанятые, реже ООО. Конкретные требования к подключению команда обсуждает после заявки.'],
+    ['Чем заявка на модерацию отличается от регистрации?', 'Заявка знакомит команду ФотоКонтур с вашей студией и задачами. Регистрация создаёт учётную запись в сервисе. Эти действия не заменяют друг друга: после проверки заявки будет знакомство с менеджером и рабочий доступ.'],
+    ['Что подготовить для заявки?', 'Название студии или ваше имя, город, контакт для связи и ссылку на портфолио, если она есть. Полезно коротко описать, какие съёмки вы проводите и что хотите упростить.'],
+    ['Можно ли сначала посмотреть интерфейс?', 'Да. На странице «Как это работает» открыт кликабельный прототип кабинета руководителя студии: фотосессии, альбомы, шаблоны, заказы и дашборд. Регистрация не нужна, а инструкция по сервису подсветит нужные блоки.'],
+  ] },
+  { title: 'Рабочий процесс и расчёты', id: 'work', items: [
+    ['Как устроена работа со съёмками?', 'Фотосессии собраны в календаре со статусами: открытая дата, запланировано, в обработке, проведено. Для новой съёмки выбираются учреждение, тематика, шаблон альбома, группы и команда.'],
+    ['Как родители выбирают фотографии?', 'У каждого ребёнка своя папка. Родитель подтверждает её, выбирает кадры, форматы и количество, а студия получает готовый состав заказа в кабинете.'],
+    ['Нужно ли каждый раз заново настраивать цены?', 'Нет. Шаблон альбома хранит период покупки, форматы печати и цены, продукцию, электронные фото и акции. Его достаточно выбрать при создании фотосессии.'],
+    ['Как студия получает деньги?', 'Родители оплачивают заказы онлайн — картой или через СБП, онлайн-оплата уже настроена в сервисе. Деньги за оплаченные заказы ежедневно поступают на расчётный счёт студии. Работа в сервисе для студии бесплатна.'],
+    ['Какие показатели есть в дашборде?', 'Выручка, количество заказов, средний чек, топ тематик, оплата онлайн и наличными, сравнение периодов. В разделе «Финансы» — баланс и история операций.'],
+    ['Можно ли работать командой?', 'Да. Есть роли руководителя, администратора, оператора и фотографа, у каждой свои права. Например, фотограф видит свои съёмки, а оператору суммы не показываются.'],
+    ['Есть ли отчёт для школы или сада?', 'Да. Отчёт для учреждения открывается по ссылке с кодом доступа, есть выгрузка в Excel.'],
+  ] },
+  { title: 'Фотографии, данные и демо', id: 'data', items: [
+    ['Какие документы нужны для работы с фотографиями?', 'До начала работы нужно согласовать применимые документы и порядок использования фотографий, включая материалы с участием детей. Запросите у команды ФотоКонтур актуальные документы и условия хранения и удаления данных. Этот сайт не заменяет договор или юридическую консультацию.'],
+    ['Записываются ли действия в системе?', 'Да, действия в сервисе записываются в журнал изменений.'],
+    ['Демо использует данные моей студии?', 'Нет. Прототип на странице «Как это работает» работает на вымышленных данных: он не запрашивает аккаунт, не загружает ваши фотографии и не проводит оплату.'],
+    ['Форма на этом сайте отправляет заявку?', 'Пока нет — это демонстрационная версия формы. Введённое не отправляется и не сохраняется. Рабочая отправка будет подключена вместе с утверждёнными условиями обработки данных.'],
+  ] },
+];
+const total = groups.reduce((s, g) => s + g.items.length, 0);
+const pad = (n: number) => String(n).padStart(2, '0');
+---
+<Base title="Вопросы и ответы">
+  <section class="wrap qh">
+    <div class="qh-title"><h1>Вопросы до<br/>первой съёмки.</h1></div>
+  </section>
+
+  <div class="wrap qa" data-faq-list>
+    {groups.map((g, gi) => (
+      <section class="qa-topic" id={g.id} data-faq-group aria-labelledby={`${g.id}-title`}>
+        <header class="qa-aside">
+          <h2 id={`${g.id}-title`}>{g.title}</h2>
+        </header>
+        <ol class="qa-list">
+          {g.items.map(([q, a], i) => {
+            const id = `${g.id}-${i + 1}`;
+            const open = gi === 0 && i === 0;
+            return (
+              <li class:list={['qa-item', { 'is-open': open }]} data-faq-item>
+                <h3>
+                  <button type="button" aria-expanded={String(open)} aria-controls={`${id}-a`} id={`${id}-q`}>
+                    <span class="qa-q">{q}</span>
+                    <span class="qa-sign" aria-hidden="true"></span>
+                  </button>
+                </h3>
+                <div class="qa-panel" id={`${id}-a`} role="region" aria-labelledby={`${id}-q`}>
+                  <div><p class="qa-a">{a}</p></div>
+                </div>
+              </li>
+            );
+          })}
+        </ol>
+      </section>
+    ))}
+  </div>
+
+  <section class="wrap qend">
+    <p class="qend-lead">Остался вопрос?</p>
+    <a class="qend-link" href="#question"><span>Спросите команду</span><span class="qend-arrow" aria-hidden="true">→</span></a>
+    <p class="qend-alt">Можно <a href="#question">заказать звонок</a> или сначала <a href="/how-it-works/">посмотреть кабинет</a>.</p>
+  </section>
+</Base>
+
+<style>
+.qh{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:24px 64px;align-items:end;padding:48px 0 0}
+.qh-kicker{font-size:13px;font-weight:700;letter-spacing:.04em;color:var(--muted);margin-bottom:22px;font-variant-numeric:tabular-nums}
+
+
+.qh-index{display:grid;border-top:1.5px solid var(--ink);margin-bottom:8px}
+.qh-index a{display:grid;grid-template-columns:44px auto 1fr auto;align-items:baseline;gap:12px;padding:16px 0;border-bottom:1px solid var(--line);font-size:17px;font-weight:600;letter-spacing:-.01em;transition:padding .3s ease,color .3s}
+.qh-n,.qh-c{font-size:13px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--muted);transition:color .3s}
+.qh-dots{height:1px;align-self:center;background-image:linear-gradient(90deg,#afafaf 1px,transparent 1px);background-size:6px 1px}
+.qh-index a:hover{padding-left:10px}
+.qh-index a:hover .qh-n,.qh-index a:hover .qh-c{color:var(--orange)}
+.qh-index a:hover .qh-dots{background-image:linear-gradient(90deg,var(--orange) 1px,transparent 1px)}
+
+.qh-search{grid-column:1/-1;display:flex;align-items:baseline;gap:24px;margin-top:34px;border-bottom:2px solid var(--ink);padding-bottom:12px;transition:border-color .3s}
+.qh-search input{flex:1;min-width:0;border:0;outline:0;background:none;padding:0;font-size:clamp(22px,2.4vw,32px);font-weight:500;letter-spacing:-.03em;color:var(--ink)}
+.qh-search input::placeholder{color:#a7a7a7}
+.qh-search output{font-size:13px;font-weight:700;color:var(--muted);white-space:nowrap;font-variant-numeric:tabular-nums}
+.qh-search:focus-within{border-bottom-color:var(--steel)}
+
+.qa{padding:24px 0 32px}
+.qa-topic{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2.2fr);gap:48px;padding:43px 0 0;scroll-margin-top:90px}
+.qa-aside{position:sticky;top:120px;align-self:start}
+.qa-num{display:block;font-size:clamp(96px,11vw,168px);font-weight:700;line-height:.8;letter-spacing:-.07em;color:transparent;-webkit-text-stroke:1.5px var(--ink);font-variant-numeric:tabular-nums}
+.qa-topic:nth-child(2) .qa-num{-webkit-text-stroke-color:var(--steel)}
+.qa-topic:nth-child(3) .qa-num{-webkit-text-stroke-color:var(--orange)}
+.qa-aside h2{font-size:26px;line-height:1.15;margin-top:22px;max-width:260px}
+.qa-list{list-style:none;margin:0;padding:0;border-top:1.5px solid var(--ink)}
+.qa-item{border-bottom:1px solid var(--line)}
+.qa-item h3{margin:0;font:inherit;letter-spacing:normal}
+.qa-item button{display:grid;grid-template-columns:1fr 28px;align-items:baseline;gap:12px;width:100%;padding:24px 0;border:0;background:none;text-align:left;color:var(--ink)}
+.qa-idx{font-size:13px;font-weight:700;color:var(--muted);font-variant-numeric:tabular-nums;transition:color .25s}
+.qa-q{font-size:clamp(18px,1.6vw,22px);font-weight:600;line-height:1.3;letter-spacing:-.025em;transition:transform .3s ease}
+.qa-item button:hover .qa-q{transform:translateX(6px)}
+.qa-item button:hover .qa-idx,.qa-item.is-open .qa-idx{color:var(--orange)}
+.qa-sign{position:relative;width:18px;height:18px;align-self:center}
+.qa-sign:before,.qa-sign:after{content:'';position:absolute;left:0;right:0;top:50%;height:1.5px;margin-top:-.75px;background:var(--ink);transition:transform .35s ease}
+.qa-sign:after{transform:rotate(90deg)}
+.qa-item.is-open .qa-sign:after{transform:rotate(0)}
+.qa-panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s ease}
+.qa-panel>div{overflow:hidden}
+.qa-item.is-open .qa-panel{grid-template-rows:1fr}
+.qa-a{padding:0 40px 28px 64px;font-size:17px;line-height:1.7;color:#454545;max-width:none}
+.qa-item :global(mark){background:linear-gradient(transparent 58%,#d2d2d2 58%);color:inherit}
+.qa-empty{padding:32px 0 0;font-size:clamp(20px,2vw,26px);letter-spacing:-.02em;color:var(--muted)}
+
+.qend{padding:72px 0;border-top:1px solid var(--line);margin-top:48px}
+.qend-lead{font-size:15px;font-weight:700;color:var(--muted);margin-bottom:12px}
+.qend-link{display:inline-flex;align-items:baseline;gap:.35em;font-size:clamp(44px,7vw,112px);font-weight:600;line-height:1;letter-spacing:-.06em;color:var(--ink)}
+.qend-link span:first-child{background:linear-gradient(var(--orange),var(--orange)) 0 100%/0 .06em no-repeat;padding-bottom:.08em;transition:background-size .5s ease}
+.qend-link:hover span:first-child,.qend-link:focus-visible span:first-child{background-size:100% .06em}
+.qend-arrow{color:var(--orange);transition:transform .4s ease}
+.qend-link:hover .qend-arrow{transform:translateX(.18em)}
+.qend-alt{margin-top:28px;font-size:16px;color:var(--muted)}
+.qend-alt a{color:var(--ink);font-weight:600;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px}
+.qend-alt a:hover{color:var(--orange)}
+
+@media(max-width:1100px){.qh{grid-template-columns:1fr;gap:40px}.qa-topic{grid-template-columns:1fr;gap:24px}.qa-aside{position:static;display:flex;align-items:flex-end;gap:20px}.qa-aside h2{margin:0 0 6px}.qa-num{font-size:96px}}
+@media(max-width:760px){
+  .qh{padding-top:32px}.qh-index a{grid-template-columns:34px 1fr auto;font-size:15px}.qh-dots{display:none}
+  .qh-search{margin-top:36px;gap:12px}.qh-search output{display:none}
+  .qa-topic{padding-top:32px}.qa-num{font-size:68px;-webkit-text-stroke-width:1.2px}.qa-aside h2{font-size:21px}
+  .qa-item button{grid-template-columns:1fr 18px;padding:18px 0}
+  .qa-a{padding:0 0 22px 48px;font-size:15px}
+  .qend{padding:43px 0}
+}
+@media(prefers-reduced-motion:reduce){.qa-panel,.qa-sign:before,.qa-sign:after,.qa-q{transition:none}}
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-faq-item]').forEach(item=>{
+    const btn=item.querySelector('button')!;
+    btn.addEventListener('click',()=>{
+      const open=!item.classList.contains('is-open');
+      item.classList.toggle('is-open',open);
+      btn.setAttribute('aria-expanded',String(open));
+    });
+  });
+</script>

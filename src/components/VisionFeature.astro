@@ -1,0 +1,312 @@
+---
+import { ScanFace, FolderHeart, Images, ArrowRight, Check, Sparkles } from '@lucide/astro';
+// Демонстрация сценария распознавания. В монохромном прототипе лица заменены силуэтами-заглушками.
+const shots = [
+  { result: 'match' },
+  { result: 'other' },
+  { result: 'other' },
+  { result: 'review' },
+  { result: 'other' },
+  { result: 'other' },
+];
+const dots = [[33,48],[67,48],[38,57],[62,57],[50,70],[41,82],[59,82],[50,94]];
+const mesh = 'M33 48L38 57L50 70L62 57L67 48M38 57L62 57M50 70L41 82L50 94L59 82L50 70M41 82L59 82';
+---
+<section class="vision" id="vision" aria-labelledby="vision-title" data-vision>
+  <div class="vision-backdrop" aria-hidden="true"><div class="ph ph--dark ph--fill ph--corner"><span>Фоновое изображение · распознавание лиц</span></div></div>
+  <div class="wrap vision-layout">
+    <div class="vision-copy">
+      <span class="vision-eyebrow"><ScanFace size={19}/> Главное преимущество сервиса <b>·</b> VK Vision</span>
+      <h2 id="vision-title">Узнать лицо.<br/><em>Собрать персональный альбом.</em></h2>
+      <p>После общей съёмки фотограф загружает кадры и задаёт образец лица. Сценарий распознавания сопоставляет лица на снимках и группирует фотографии в персональные папки детей.</p>
+      <div class="vision-verification"><span></span><div><strong>Фотограф сохраняет контроль:</strong> спорные кадры можно проверить перед публикацией.</div></div>
+    </div>
+
+    <div class="scanner" data-scanner aria-hidden="true">
+      <div class="sc-head">
+        <span class="sc-live"><i></i>AI-сопоставление</span>
+        <span class="sc-status"><Sparkles size={14}/><span data-status>Загрузка кадров</span></span>
+      </div>
+      <div class="sc-body">
+        <div class="sc-side">
+          <div class="sc-ref">
+            <small>Образец лица</small>
+            <div class="sc-ref-img"><span class="face-ph"></span><span class="sc-ref-ring"></span></div>
+          </div>
+          <div class="sc-folder" data-folder>
+            <span class="sc-folder-icon"><FolderHeart size={22}/></span>
+            <div><small>Папка ребёнка</small><strong><b data-count>0</b> фото</strong></div>
+            <div class="sc-folder-thumbs" data-thumbs></div>
+          </div>
+        </div>
+        <div class="sc-grid">
+          {shots.map((s, i) => (
+            <div class="shot" data-shot data-result={s.result} style={`--i:${i}`}>
+              <span class="face-ph"></span>
+              <svg class="shot-overlay" viewBox="0 0 100 120" preserveAspectRatio="none">
+                <path class="shot-brackets" d="M22 38V28H32M68 28H78V38M78 90V100H68M32 100H22V90" />
+                <path class="shot-mesh" d={mesh} pathLength="1" />
+                {dots.map(([x, y]) => <circle class="shot-dot" cx={x} cy={y} r="1.6" />)}
+              </svg>
+              <span class="shot-tag shot-tag-match"><Check size={12}/>Совпадает</span>
+              <span class="shot-tag shot-tag-other">Другой ребёнок</span>
+              <span class="shot-tag shot-tag-review">Проверить</span>
+              {s.result === 'review' && <span class="shot-confirm">Подтвердить</span>}
+            </div>
+          ))}
+          <span class="sc-beam"></span>
+        </div>
+      </div>
+      <p class="sc-caption">Демонстрация сценария · вместо фото — заглушки</p>
+    </div>
+  </div>
+
+  <div class="wrap vision-bottom">
+    <div class="vision-flow" aria-label="Как формируются персональные папки">
+      <div class="vision-step" data-step="0"><span class="vision-step-icon"><Images size={28}/></span><div><small>Загрузить</small><strong>Кадры съёмки</strong></div><span class="vision-step-bar"></span></div>
+      <ArrowRight class="vision-arrow" size={24}/>
+      <div class="vision-step" data-step="1"><span class="vision-step-icon"><ScanFace size={28}/></span><div><small>Сопоставить</small><strong>Лица на фото</strong></div><span class="vision-step-bar"></span></div>
+      <ArrowRight class="vision-arrow" size={24}/>
+      <div class="vision-step" data-step="2"><span class="vision-step-icon"><FolderHeart size={28}/></span><div><small>Проверить</small><strong>Папки детей</strong></div><span class="vision-step-bar"></span></div>
+    </div>
+  </div>
+</section>
+
+<style>
+.vision{position:relative;isolation:isolate;overflow:hidden;background:#131313;color:#ffffff;padding:58px 0 34px}
+.vision-backdrop{position:absolute;inset:0;z-index:-2}
+.vision-backdrop .ph{opacity:.35}
+.vision:before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(60% 70% at 72% 45%,#50505033,transparent 70%),linear-gradient(90deg,#131313 0%,#131313e6 35%,#13131399 70%,#13131366 100%)}
+.vision-layout{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.1fr);gap:56px;align-items:center}
+.vision-eyebrow{display:inline-flex;gap:11px;align-items:center;border:1px solid #cccccc80;background:#2c2c2cc9;border-radius:99px;padding:10px 17px;font-size:13px;font-weight:800;color:#e9e9e9;letter-spacing:.035em;margin-bottom:34px;box-shadow:0 0 28px #9f9f9f25}
+.vision-eyebrow b{font-weight:400;color:#acacac}
+.vision h2{font-size:clamp(31px,3.26vw,49px);line-height:1.04;letter-spacing:-.06em}
+.vision h2 em{font-style:normal;color:#d2d2d2}
+.vision-copy>p{font-size:19px;line-height:1.65;color:#ebebeb;max-width:540px;margin-top:32px}
+.vision-verification{display:flex;align-items:start;gap:13px;max-width:520px;font-size:15px;line-height:1.6;color:#dcdcdc;margin-top:28px}
+.vision-verification span{width:9px;height:9px;flex:none;border-radius:50%;background:#c6c6c6;box-shadow:0 0 0 7px #c6c6c624,0 0 20px #c6c6c6;margin-top:8px}
+.vision-verification strong{color:#ffffff}
+
+/* Сканер */
+.scanner{--sky:#d3d3d3;--amber:#bbbbbb;position:relative;padding:18px;border-radius:26px;background:linear-gradient(160deg,#2d2d2dcc,#191919e6);border:1px solid #cacaca40;box-shadow:0 40px 80px -40px #000000,inset 0 1px 0 #ffffff1a;backdrop-filter:blur(14px)}
+.sc-head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:2px 4px 16px}
+.sc-live{display:inline-flex;align-items:center;gap:9px;font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#efefef}
+.sc-live i{width:8px;height:8px;border-radius:50%;background:var(--sky);box-shadow:0 0 0 4px #d3d3d330;animation:sc-pulse 1.6s ease-in-out infinite}
+.sc-status{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:700;color:#e1e1e1;background:#d3d3d314;border:1px solid #d3d3d333;border-radius:99px;padding:6px 12px;min-width:0}
+.sc-status [data-status]{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sc-body{display:grid;grid-template-columns:136px 1fr;gap:14px}
+.sc-side{display:flex;flex-direction:column;gap:12px}
+.sc-ref,.sc-folder{border-radius:16px;background:#ffffff0d;border:1px solid #ffffff1f;padding:10px}
+.sc-ref small,.sc-folder small{display:block;font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#c1c1c1;margin-bottom:8px}
+.sc-ref-img{position:relative;border-radius:11px;overflow:hidden}
+.sc-ref-img .face-ph{width:100%}
+.sc-ref-ring{position:absolute;inset:0;border-radius:11px;box-shadow:inset 0 0 0 2px var(--sky);opacity:0;transition:opacity .3s}
+.scanner.is-comparing .sc-ref-ring{opacity:1;animation:sc-ring 1s ease-in-out infinite}
+.sc-folder{margin-top:auto;display:flex;flex-direction:column;gap:8px;transition:border-color .3s,background .3s,transform .3s}
+.sc-folder small{margin-bottom:2px}
+.sc-folder-icon{display:grid;place-items:center;width:40px;height:40px;border-radius:12px;background:#d3d3d31f;color:var(--sky)}
+.sc-folder strong{font-size:16px}.sc-folder b{font-variant-numeric:tabular-nums;color:var(--sky)}
+.sc-folder-thumbs{display:flex;min-height:30px}.sc-folder-thumbs :global(.face-ph){width:26px;height:30px;border-radius:6px;border:2px solid #262626;margin-right:-8px;animation:sc-thumb .4s cubic-bezier(.2,.9,.3,1.4)}
+@keyframes sc-thumb{from{transform:scale(0)}}
+.sc-folder.is-bump{transform:scale(1.06);border-color:var(--sky);background:#d3d3d31f}
+.sc-grid{position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;overflow:hidden;border-radius:14px}
+.shot{position:relative;border-radius:12px;overflow:hidden;background:#1f1f1f;opacity:0;transform:translateY(14px) scale(.96);transition:opacity .45s ease,transform .45s ease,filter .4s}
+.shot .face-ph{transition:opacity .4s}
+.shot.is-in{opacity:1;transform:none}
+.shot-overlay{position:absolute;inset:0;width:100%;height:100%;fill:none;pointer-events:none}
+.shot-brackets{stroke:#ffffff;stroke-width:1.6;vector-effect:non-scaling-stroke;opacity:0;transform:scale(1.25);transform-origin:50% 64%;transition:opacity .3s,transform .4s cubic-bezier(.2,.9,.3,1.3),stroke .3s}
+.shot-mesh{stroke:#ffffffb3;stroke-width:1;vector-effect:non-scaling-stroke;stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset .7s ease .15s,stroke .3s,opacity .3s}
+.shot-dot{fill:#ffffff;opacity:0;transition:opacity .2s,fill .3s}
+.shot.is-detected .shot-brackets{opacity:1;transform:none}
+.shot.is-detected .shot-mesh{stroke-dashoffset:0}
+.shot.is-detected .shot-dot{opacity:1}
+.shot.is-detected .shot-dot:nth-of-type(2n){transition-delay:.1s}
+.shot.is-detected .shot-dot:nth-of-type(3n){transition-delay:.2s}
+.shot-tag,.shot-confirm{position:absolute;left:6px;right:6px;bottom:6px;display:flex;justify-content:center;align-items:center;gap:4px;padding:4px 6px;border-radius:7px;font-size:10px;font-weight:800;white-space:nowrap;opacity:0;transform:translateY(6px);transition:opacity .3s,transform .3s}
+.shot-tag-match{background:var(--sky);color:#222222}
+.shot-tag-other{background:#181818d9;color:#c7c7c7}
+.shot-tag-review{background:var(--amber);color:#252525}
+.shot.is-match .shot-brackets,.shot.is-match .shot-mesh{stroke:var(--sky)}.shot.is-match .shot-dot{fill:var(--sky)}
+.shot.is-match{box-shadow:0 0 0 2px var(--sky),0 0 26px #d3d3d366}
+.shot.is-match .shot-tag-match,.shot.is-other .shot-tag-other,.shot.is-review .shot-tag-review{opacity:1;transform:none}
+.shot.is-other .face-ph{opacity:.45}
+.shot.is-other .shot-overlay{opacity:.25}
+.shot.is-review .shot-brackets,.shot.is-review .shot-mesh{stroke:var(--amber)}.shot.is-review .shot-dot{fill:var(--amber)}
+.shot.is-review{box-shadow:0 0 0 2px var(--amber)}
+.shot-confirm{bottom:32px;left:50%;right:auto;transform:translate(-50%,6px);background:#ffffff;color:var(--ink);padding:6px 10px;box-shadow:0 8px 20px -6px #000000}
+.shot.is-confirming .shot-confirm{opacity:1;transform:translate(-50%,0);animation:sc-press .9s ease .4s}
+.shot.is-moved{opacity:.18;transform:scale(.94)}
+.shot.is-moved .shot-tag,.shot.is-moved .shot-confirm{opacity:0}
+.sc-beam{position:absolute;top:-10%;bottom:-10%;left:0;width:70px;pointer-events:none;opacity:0;background:linear-gradient(90deg,transparent,#d3d3d326 60%,#e7e7e7 96%,transparent);filter:drop-shadow(0 0 10px #c5c5c5)}
+.scanner.is-scanning .sc-beam{animation:sc-beam 1.9s cubic-bezier(.45,0,.55,1) forwards}
+.sc-caption{margin-top:12px;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:#9d9d9d;text-align:right}
+:global(.sc-fly){position:fixed;z-index:60;border-radius:12px;overflow:hidden;pointer-events:none;box-shadow:0 0 0 2px #d3d3d3,0 18px 40px -10px #000000}
+:global(.sc-fly .face-ph){width:100%;height:100%}
+
+/* Шаги */
+.vision-bottom{margin-top:34px}
+.vision-flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:15px;align-items:center}
+.vision-step{position:relative;overflow:hidden;min-height:96px;padding:18px 20px;display:flex;gap:16px;align-items:center;background:#282828b3;border:1px solid #c1c1c130;border-radius:16px;transition:border-color .4s,background .4s,box-shadow .4s}
+.vision-step-icon{width:54px;height:54px;display:grid;place-items:center;flex:none;border-radius:14px;background:#cacaca1a;color:#b0b0b0;transition:background .4s,color .4s}
+.vision-step small{display:block;color:#999999;font-size:11px;text-transform:uppercase;font-weight:800;letter-spacing:.11em;margin-bottom:5px;transition:color .4s}
+.vision-step strong{font-size:18px;line-height:1.25;color:#d3d3d3;transition:color .4s}
+.vision-step-bar{position:absolute;left:0;bottom:0;height:3px;width:0;background:#d3d3d3}
+.vision-step.is-active{border-color:#d2d2d2af;background:#3d3d3ddb;box-shadow:0 0 30px #b1b1b127}
+.vision-step.is-active .vision-step-icon{background:#d3d3d32e;color:#ebebeb}
+.vision-step.is-active small{color:#d2d2d2}.vision-step.is-active strong{color:#ffffff}
+.vision-step.is-active .vision-step-bar{width:100%;transition:width var(--step-time,3s) linear}
+.vision-step.is-done .vision-step-icon{color:#d3d3d3}
+.vision-arrow{color:#969696}
+.vision-status{max-width:940px;color:#a3a3a3;font-size:11px;line-height:1.65;margin-top:16px}
+.vision-copy,.scanner{transition:opacity .8s,transform .8s}
+@media(prefers-reduced-motion:no-preference){.vision .will-reveal{opacity:0;transform:translateY(28px)}}
+
+@keyframes sc-pulse{50%{opacity:.4;box-shadow:0 0 0 8px #d3d3d310}}
+@keyframes sc-ring{50%{box-shadow:inset 0 0 0 2px #d3d3d3,0 0 22px #d3d3d380}}
+@keyframes sc-beam{0%{opacity:0;transform:translateX(-80px)}10%{opacity:1}90%{opacity:1}100%{opacity:0;transform:translateX(calc(var(--grid-w,400px) + 10px))}}
+@keyframes sc-press{40%{transform:translate(-50%,0) scale(.9)}}
+
+@media(max-width:1100px){.vision-layout{grid-template-columns:1fr;gap:44px}.vision-copy{max-width:640px}.scanner{max-width:640px}}
+@media(max-width:760px){
+  .vision{padding:37px 0 30px}.vision h2{font-size:clamp(28px,6.8vw,38px)}.vision-eyebrow{font-size:11px;margin-bottom:26px}
+  .vision-copy>p{font-size:17px;margin-top:24px}.vision-verification{font-size:14px}
+  .scanner{padding:12px;border-radius:20px}.sc-body{grid-template-columns:1fr}
+  .sc-side{flex-direction:row}.sc-ref{flex:0 0 96px;padding:8px}.sc-folder{flex:1;margin-top:0;justify-content:center}
+  .sc-grid{gap:6px}.shot-tag{font-size:8px;padding:3px 4px;left:4px;right:4px;bottom:4px}.shot-confirm{font-size:9px;bottom:24px}
+  .sc-head{padding-bottom:12px}.sc-status{font-size:11px;padding:5px 9px}.sc-live{font-size:0;gap:0}
+  .vision-bottom{margin-top:36px}.vision-flow{grid-template-columns:1fr;gap:8px}.vision-arrow{display:none}
+  .vision-step{min-height:74px;padding:12px 14px}.vision-step-icon{width:46px;height:46px}.vision-step strong{font-size:16px}
+}
+@media(prefers-reduced-motion:reduce){.sc-live i,.scanner.is-comparing .sc-ref-ring{animation:none}}
+</style>
+
+<script>
+  const sleep=(ms:number)=>new Promise(r=>setTimeout(r,ms));
+  document.querySelectorAll<HTMLElement>('[data-vision]').forEach(section=>{
+    const scanner=section.querySelector<HTMLElement>('[data-scanner]')!;
+    const grid=scanner.querySelector<HTMLElement>('.sc-grid')!;
+    const shots=[...scanner.querySelectorAll<HTMLElement>('[data-shot]')];
+    const folder=scanner.querySelector<HTMLElement>('[data-folder]')!;
+    const count=scanner.querySelector<HTMLElement>('[data-count]')!;
+    const status=scanner.querySelector<HTMLElement>('[data-status]')!;
+    const thumbs=scanner.querySelector<HTMLElement>('[data-thumbs]')!;
+    const steps=[...section.querySelectorAll<HTMLElement>('[data-step]')];
+    const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const resultClass:Record<string,string>={match:'is-match',other:'is-other',review:'is-review'};
+    let visible=false,running=false;
+
+    function step(i:number,time:number){
+      steps.forEach((s,n)=>{
+        s.classList.remove('is-active');
+        s.classList.toggle('is-done',n<i);
+      });
+      if(i<0)return;
+      steps[i].style.setProperty('--step-time',`${time}ms`);
+      void steps[i].offsetWidth;
+      steps[i].classList.add('is-active');
+    }
+    function addThumb(shot:HTMLElement){
+      const ph=document.createElement('span');
+      ph.className='face-ph';
+      thumbs.append(ph);
+    }
+    function setCount(n:number){
+      count.textContent=String(n);
+      folder.classList.add('is-bump');
+      setTimeout(()=>folder.classList.remove('is-bump'),350);
+    }
+    // Копия кадра перелетает в папку ребёнка.
+    async function fly(shot:HTMLElement){
+      const from=shot.getBoundingClientRect();
+      const to=folder.getBoundingClientRect();
+      const clone=document.createElement('div');
+      clone.className='sc-fly';
+      clone.innerHTML='<span class="face-ph"></span>';
+      Object.assign(clone.style,{left:`${from.left}px`,top:`${from.top}px`,width:`${from.width}px`,height:`${from.height}px`});
+      document.body.append(clone);
+      shot.classList.add('is-moved');
+      const dx=to.left+to.width/2-(from.left+from.width/2);
+      const dy=to.top+to.height/2-(from.top+from.height/2);
+      await clone.animate([
+        {transform:'translate(0,0) scale(1)',opacity:1},
+        {transform:`translate(${dx*.55}px,${dy*.55-30}px) scale(.7)`,opacity:1,offset:.6},
+        {transform:`translate(${dx}px,${dy}px) scale(.2)`,opacity:0}
+      ],{duration:850,easing:'cubic-bezier(.5,0,.3,1)'}).finished.catch(()=>{});
+      clone.remove();
+    }
+    function reset(){
+      scanner.classList.remove('is-scanning','is-comparing');
+      shots.forEach(s=>s.className='shot');
+      count.textContent='0';
+      thumbs.replaceChildren();
+      step(-1,0);
+    }
+    function showFinal(){
+      shots.forEach(s=>s.classList.add('is-in','is-detected',resultClass[s.dataset.result!]));
+      count.textContent='1';
+      shots.filter(s=>s.dataset.result==='match').forEach(addThumb);
+      status.textContent='1 фото в папке · 1 на проверке';
+      step(2,0);
+    }
+
+    async function cycle(){
+      reset();
+      status.textContent='Загрузка кадров';
+      step(0,1400);
+      for(const s of shots){s.classList.add('is-in');await sleep(140)}
+      await sleep(500);
+
+      status.textContent='Поиск лиц на кадрах';
+      step(1,4600);
+      grid.style.setProperty('--grid-w',`${grid.clientWidth}px`);
+      scanner.classList.add('is-scanning');
+      // Луч идёт слева направо: лица отмечаются по колонкам.
+      const cols=3;
+      for(let c=0;c<cols;c++){
+        await sleep(c===0?420:520);
+        shots.forEach((s,i)=>{if(i%cols===c)s.classList.add('is-detected')});
+      }
+      await sleep(700);
+      scanner.classList.remove('is-scanning');
+
+      status.textContent='Сравнение с образцом';
+      scanner.classList.add('is-comparing');
+      for(const s of shots){await sleep(300);s.classList.add(resultClass[s.dataset.result!])}
+      await sleep(700);
+      scanner.classList.remove('is-comparing');
+
+      status.textContent='Раскладка по папкам';
+      step(2,4200);
+      for(const s of shots.filter(s=>s.dataset.result==='match')){await fly(s);addThumb(s);setCount(1)}
+      await sleep(500);
+      status.textContent='Спорный кадр ждёт фотографа';
+      const review=shots.find(s=>s.dataset.result==='review');
+      if(review){
+        review.classList.add('is-confirming');
+        await sleep(1500);
+        status.textContent='Фотограф подтвердил кадр';
+        await fly(review);
+        addThumb(review);
+        setCount(2);
+      }
+      status.textContent='Готово · 2 фото в папке';
+      await sleep(2600);
+    }
+    async function loop(){
+      if(running)return;
+      running=true;
+      while(visible)await cycle();
+      running=false;
+    }
+
+    if(reduce||!('IntersectionObserver' in window)){showFinal();return}
+    [section.querySelector<HTMLElement>('.vision-copy')!,scanner].forEach(n=>n.classList.add('will-reveal'));
+    new IntersectionObserver(entries=>{
+      visible=entries.some(e=>e.isIntersecting);
+      if(visible){
+        section.querySelectorAll('.will-reveal').forEach(n=>n.classList.remove('will-reveal'));
+        loop();
+      }
+    },{threshold:.3}).observe(scanner);
+  });
+</script>

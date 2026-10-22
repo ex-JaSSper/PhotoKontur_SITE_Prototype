@@ -1,0 +1,19 @@
+---
+import Base from '../layouts/BaseLayout.astro';
+import CTA from '../components/CTA.astro';
+import ReviewsShowcase from '../components/ReviewsShowcase.astro';
+import '../styles/home.css';
+---
+<Base title="Отзывы фотостудий">
+  <section class="intro wrap">
+    <h1>За каждым процессом —<br/>опыт фотографа.</h1>
+    <p class="lead">Как студии организуют съёмки, выбор фотографий и заказы в ФотоКонтур.</p>
+  </section>
+  <section class="section wrap reviews-page"><ReviewsShowcase/></section>
+  <CTA/>
+</Base>
+
+<style>
+/* вступление и главный кейс — без двойного отступа между ними */
+.reviews-page{padding-top:0}
+</style>

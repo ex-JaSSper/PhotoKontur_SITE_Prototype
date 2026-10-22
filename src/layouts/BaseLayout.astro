@@ -1,0 +1,10 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import LeadDrawer from '../components/LeadDrawer.astro';
+import '@fontsource-variable/manrope';
+import '../styles/global.css';
+interface Props { title: string; description?: string }
+const { title, description='ФотоКонтур — рабочее пространство для фотографов и фотостудий: съёмки, альбомы, заказы и аналитика.' }=Astro.props;
+---
+<!doctype html><html lang="ru"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><meta name="description" content={description}/><meta name="robots" content="noindex,nofollow"/><meta name="theme-color" content="#f3f3f3"/><title>{title} — ФотоКонтур</title><meta property="og:title" content={`${title} — ФотоКонтур`}/><meta property="og:description" content={description}/><meta property="og:type" content="website"/><link rel="icon" href="/favicon.svg" type="image/svg+xml"/></head><body><a class="skip" href="#main">К содержанию</a><Header/><main id="main"><slot/></main><Footer/><LeadDrawer/></body></html>

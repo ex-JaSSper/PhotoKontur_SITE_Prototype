@@ -1,0 +1,65 @@
+---
+import Base from '../layouts/BaseLayout.astro';
+import CTA from '../components/CTA.astro';
+import CommercialSections from '../components/CommercialSections.astro';
+import { FileText, Download, ArrowUpRight } from '@lucide/astro';
+import '../styles/home.css';
+import '../styles/chapter.css';
+
+// Подтверждающие документы. Сейчас — PDF-заглушки (work/make-security-docs.py), утверждённые файлы даёт заказчик.
+const docs = [
+  { file: 'privacy-policy', title: 'Политика обработки персональных данных', text: 'Оператор, состав данных, цели, основания и сроки обработки, права субъекта данных.' },
+  { file: 'parent-consent', title: 'Согласие родителя на обработку данных и съёмку ребёнка', text: 'Форма согласия законного представителя и порядок его отзыва.' },
+  { file: 'photo-storage', title: 'Положение о хранении и удалении фотографий', text: 'Где и сколько хранятся альбомы, как удаляются снимки.' },
+  { file: 'access-roles', title: 'Регламент доступа по ролям', text: 'Права руководителя, администратора, оператора и фотографа; доступ родителя.' },
+  { file: 'studio-agreement', title: 'Договор с фотостудией', text: 'Условия подключения, ответственность сторон, расчёты и выплаты.' },
+];
+---
+<Base title="Безопасность и документы">
+  <section class="intro wrap">
+    <h1>Безопасность<br/>и документы.</h1>
+    <p class="lead">Как в ФотоКонтур разделён доступ к съёмкам и альбомам — и документы, на которых держится работа с данными.</p>
+  </section>
+
+  <CommercialSections part="security"/>
+
+  <section class="section wrap rule" id="documents" aria-labelledby="docs-title">
+    <div class="section-head">
+      <div><span class="eyebrow">Подтверждающие документы</span><h2 id="docs-title">Документы<br/>в открытом доступе.</h2></div>
+      <p class="docs-lead">Скачайте нужный документ в PDF. Полные версии договоров и ответы на вопросы о защите данных — по запросу.</p>
+    </div>
+    <ul class="docs">
+      {docs.map((d) => (
+        <li>
+          <a class="doc" href={`/docs/${d.file}.pdf`} target="_blank" rel="noopener" download>
+            <span class="doc-icon"><FileText size={26}/></span>
+            <span class="doc-body"><strong>{d.title}</strong><span>{d.text}</span></span>
+            <span class="doc-meta">PDF<Download size={18}/></span>
+          </a>
+        </li>
+      ))}
+    </ul>
+    <div class="docs-foot">
+      <p>Сейчас здесь файлы-заглушки для прототипа. Утверждённые документы предоставляет заказчик как оператор персональных данных.</p>
+      <a class="text-link" href="#apply">Запросить документы<ArrowUpRight size={18}/></a>
+    </div>
+  </section>
+
+  <CTA/>
+</Base>
+
+<style>
+.docs-lead{max-width:420px;color:var(--muted);font-size:17px;line-height:1.55}
+.docs{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.doc{display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center;padding:22px 24px;background:var(--paper);border:1px solid var(--line);border-radius:18px;transition:border-color .2s,transform .2s}
+.doc:hover{border-color:var(--ink);transform:translateY(-2px)}
+.doc-icon{display:grid;place-items:center;width:52px;height:52px;border-radius:14px;background:var(--bg);color:var(--ink)}
+.doc-body{display:grid;gap:6px}
+.doc-body strong{font-size:17px;line-height:1.3;letter-spacing:-.01em}
+.doc-body span{font-size:14px;line-height:1.45;color:var(--muted)}
+.doc-meta{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:.08em;color:var(--muted)}
+.doc:hover .doc-meta{color:var(--ink)}
+.docs-foot{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-top:28px;padding-top:22px;border-top:1px solid var(--line);flex-wrap:wrap}
+.docs-foot p{font-size:14px;color:var(--muted);max-width:640px}
+@media(max-width:860px){.docs{grid-template-columns:1fr}.doc{padding:18px;gap:14px}.doc-icon{width:44px;height:44px}}
+</style>

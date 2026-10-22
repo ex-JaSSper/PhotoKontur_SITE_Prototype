@@ -1,0 +1,1 @@
+import{Ht as e,bt as t,kn as n,zt as r}from"./ripple-JTR065I6.js";var i={__name:`PagePanel`,props:{plain:{type:Boolean,default:!1},card:{type:Boolean,default:!1}},setup(i){return(a,o)=>(r(),t(`section`,{class:n([`page-panel`,{"page-panel_plain":i.plain,"page-panel_card":i.card}])},[e(a.$slots,`default`)],2))}};export{i as t};

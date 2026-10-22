@@ -1,0 +1,90 @@
+---
+// Электронный кошелёк: что студия видит в разделе «Финансы» кабинета (инструмент, а не путь денег).
+// Как деньги попадают на расчётный счёт — в соседнем блоке AcquiringSection («Расчёты и выплаты»).
+// Источник — спецификация «Финансы» (fotokontur-main/docs/Финансы.docx).
+import { ArrowUpRight, Wallet, ListChecks, Users, ArrowDownLeft, ArrowUpRight as Out, Landmark } from '@lucide/astro';
+
+const features = [
+  { icon: Wallet, t: 'Баланс компании', p: 'Сколько денег у студии сейчас — средства за оплаченные заказы, которые ещё не выведены на счёт.' },
+  { icon: ListChecks, t: 'История операций', p: 'Каждое поступление с номером заказа. В деталях видно, сколько поступило и сколько зачислено на баланс. Историю можно выгрузить.' },
+  { icon: Users, t: 'Переводы команде', p: 'Руководитель переводит сотрудникам зарплату за смену, премию или разовое начисление. У каждого фотографа свой баланс и свои реквизиты.' },
+];
+const ops = [
+  { icon: ArrowDownLeft, t: 'Поступление оплаты', s: 'Заказ из альбома группы' },
+  { icon: Out, t: 'Перевод фотографу', s: 'Зарплата за смену' },
+  { icon: Landmark, t: 'Выплата на счёт студии', s: 'По расписанию' },
+];
+---
+<section class="wallet" id="economics" aria-labelledby="wallet-title">
+  <div class="wrap">
+    <div class="wallet-top">
+      <div class="wallet-copy">
+        <span class="eyebrow">Электронный кошелёк</span>
+        <h2 id="wallet-title">Все деньги студии —<br/><em>на одном экране.</em></h2>
+        <p class="lead">В разделе «Финансы» кабинета собраны баланс компании, история операций и переводы команде.</p>
+        <a class="text-link" href="/how-it-works/?screen=finance#demo">Посмотреть раздел «Финансы» в демо<ArrowUpRight size={18}/></a>
+      </div>
+
+      <figure class="wallet-mock" aria-label="Схема раздела «Финансы» в кабинете">
+        <div class="wallet-mock-head"><span>Финансы компании</span><small>Раздел в кабинете</small></div>
+        <div class="wallet-balance">
+          <small>Баланс компании</small>
+          <strong>Средства студии</strong>
+          <span class="wallet-ruble" aria-hidden="true">₽</span>
+        </div>
+        <div class="wallet-ops">
+          <small>Последние операции</small>
+          <ul>
+            {ops.map((o) => <li><span class="wallet-op-icon"><o.icon size={16}/></span><span><b>{o.t}</b><em>{o.s}</em></span></li>)}
+          </ul>
+        </div>
+        <figcaption>Схема раздела, не экран сервиса. Суммы в демо условные.</figcaption>
+      </figure>
+    </div>
+
+    <ul class="wallet-features">
+      {features.map((f) => (
+        <li>
+          <span class="wallet-f-icon"><f.icon size={24}/></span>
+          <h3>{f.t}</h3>
+          <p>{f.p}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+.wallet{padding:67px 0 58px;background:var(--paper)}
+.wallet-top{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px 72px;align-items:center}
+.wallet-copy{display:grid;gap:22px;justify-items:start}
+.wallet-copy h2{font-size:clamp(28px,2.99vw,44px);line-height:1.02;letter-spacing:-.045em}
+.wallet-copy h2 em{font-style:normal;color:#8a8a8a}
+.wallet-copy .lead{max-width:480px}
+
+.wallet-mock{margin:0;padding:22px;border-radius:24px;background:#1c1c1c;color:#ffffff;display:grid;gap:14px;box-shadow:0 30px 60px -40px rgba(20,20,20,.6)}
+.wallet-mock-head{display:flex;justify-content:space-between;align-items:baseline;padding-bottom:14px;border-bottom:1px solid #333333}
+.wallet-mock-head span{font-size:16px;font-weight:700}
+.wallet-mock-head small{font-size:12px;color:#9a9a9a}
+.wallet-balance{position:relative;padding:20px;border-radius:16px;background:#2a2a2a;display:grid;gap:6px}
+.wallet-balance small,.wallet-ops>small{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#9a9a9a}
+.wallet-balance strong{font-size:24px;letter-spacing:-.02em}
+.wallet-ruble{position:absolute;right:18px;top:50%;transform:translateY(-50%);display:grid;place-items:center;width:40px;height:40px;border-radius:50%;border:1px solid #4a4a4a;font-weight:700}
+.wallet-ops{display:grid;gap:10px}
+.wallet-ops ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.wallet-ops li{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:12px;background:#242424}
+.wallet-op-icon{flex:none;display:grid;place-items:center;width:32px;height:32px;border-radius:10px;background:#333333}
+.wallet-ops li span:last-child{display:grid;gap:2px}
+.wallet-ops b{font-size:14px}
+.wallet-ops em{font-style:normal;font-size:12px;color:#9a9a9a}
+.wallet-mock figcaption{font-size:12px;color:#8a8a8a}
+
+.wallet-features{list-style:none;margin:56px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.wallet-features li{padding:28px;border-radius:22px;border:1px solid var(--line);background:var(--bg);display:grid;gap:12px;align-content:start}
+.wallet-f-icon{display:grid;place-items:center;width:52px;height:52px;border-radius:15px;background:var(--paper);color:var(--ink);border:1px solid var(--line)}
+.wallet-features h3{font-size:21px;letter-spacing:-.02em;margin-top:6px}
+.wallet-features p{font-size:15px;line-height:1.6;color:var(--muted)}
+
+@media(max-width:1000px){.wallet-top{grid-template-columns:1fr}.wallet-features{grid-template-columns:1fr}}
+@media(max-width:760px){.wallet{padding:43px 0 38px}.wallet-features li{padding:22px}}
+</style>

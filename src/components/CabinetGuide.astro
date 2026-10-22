@@ -1,0 +1,324 @@
+---
+import { BookOpen, CalendarDays, FolderHeart, LayoutTemplate, ChartNoAxesCombined, ArrowLeft, ArrowRight, X, RotateCcw } from '@lucide/astro';
+// Исходный прототип кабинета (../fotokontur-main/frontend) встроен как есть: public/demo/cabinet, сборка — work/build-cabinet-demo.mjs.
+// Инструкция подсвечивает реальные элементы прототипа (same-origin iframe) и ничего не меняет в его стилях.
+// Демо показывается от лица руководителя студии; роль фиксируется при загрузке.
+type Step = { route: string; sel: string; text?: string; alt?: string; title: string; body: string };
+type Chapter = { id: string; title: string; steps: Step[] };
+const chapters: Chapter[] = [
+  { id: 'sessions', title: 'Фотосессии', steps: [
+    { route: '/photosessions', sel: '.app-sidebar__item', text: 'Фотосессии и альбомы', alt: '.app-header__burger', title: 'Раздел «Фотосессии и альбомы»', body: 'Здесь вся подготовка съёмок: сами фотосессии, тематики и шаблоны альбомов.' },
+    { route: '/photosessions', sel: '.page-ticket', title: 'Статусы съёмок', body: 'Открытая дата, запланировано, в обработке, проведено — сразу видно, на каком этапе каждая съёмка.' },
+    { route: '/photosessions', sel: 'main section.page-panel', title: 'Календарь съёмок', body: 'Каждая фотосессия стоит на своей дате. Нажмите на любую — откроется карточка с командой и контактом учреждения.' },
+    { route: '/photosessions', sel: '.ps-page__head-actions .p-button_accent', title: 'Создать фотосессию', body: 'Новая съёмка создаётся отсюда. Нажмите «Далее» — откроем форму создания.' },
+    { route: '/photosessions/create', sel: '.isc__step', text: 'Основные данные', title: 'Шаг 1 · Учреждение и тематика', body: 'Выберите школу или сад и тематику съёмки. Дату можно оставить открытой и назначить позже.' },
+    { route: '/photosessions/create', sel: '.isc__step', text: 'Альбомы групп', title: 'Шаг 2 · Альбомы групп', body: 'Выберите шаблон альбома — цены и комплекты подставятся сами. Состав групп берётся из прошлой фотосессии учреждения.' },
+    { route: '/photosessions/create', sel: '.isc__step', text: 'Команда съёмки', title: 'Шаг 3 · Команда', body: 'Ответственный от учреждения, фотограф и ассистенты. Команду можно назначить за пару дней до съёмки.' },
+    { route: '/photosessions/create', sel: '.isc__step', text: 'Запись родителей', title: 'Шаг 4 · Запись родителей', body: 'Когда всё готово, откройте запись — родители получат ссылки и запишут детей.' },
+    { route: '/photosessions/create', sel: 'button.p-button_accent', text: 'Создать фотосессию', title: 'Фотосессия готова', body: 'Одна кнопка — и съёмка появляется в календаре со всеми альбомами и командой.' },
+  ] },
+  { id: 'albums', title: 'Альбомы и папки', steps: [
+    { route: '/institutions/1/photosessions/27', sel: '.isc__step', text: 'Основные данные', title: 'Проведённая съёмка', body: 'Карточка фотосессии «Выпускной» в детском саду: тематика, обложка и примеры фотографий для родителей.' },
+    { route: '/institutions/1/photosessions/27', sel: '.isc__step_wide', title: 'Альбомы групп', body: 'У каждой группы свой альбом. Шаблон задаёт для них цены, форматы печати и акции.' },
+    { route: '/institutions/1/photosessions/27', sel: 'li.isc__group', title: 'Папки детей', body: 'В группе у каждого ребёнка своя пронумерованная папка. Родитель подтверждает её и выбирает кадры.' },
+    { route: '/institutions/1/photosessions/27', sel: 'button.p-button-outlined', text: 'Разложить кадры по папкам', title: 'Раскладка кадров', body: 'Загрузите общие кадры — сценарий распознавания разложит их по папкам детей, а спорные оставит на проверку. Нажмите кнопку, чтобы посмотреть.' },
+    { route: '/institutions/1/photosessions/27', sel: '.isc__groups-foot', title: 'Итог по альбомам', body: 'Сколько групп и папок в съёмке — видно сразу. Группу можно добавить, если учреждение расширилось.' },
+  ] },
+  { id: 'templates', title: 'Шаблоны и тематики', steps: [
+    { route: '/templates', sel: 'main section.page-panel', title: 'Шаблоны альбомов', body: 'Шаблон настраивается один раз и переиспользуется в каждой новой съёмке: для садов, школ, выпускных.' },
+    { route: '/templates/1', sel: '.tplc__card_form', title: 'Основная информация', body: 'Название и тип учреждения: шаблон «Детский сад — базовый» будет предлагаться для садов.' },
+    { route: '/templates/1', sel: 'section.asb__block', text: 'Период покупки', title: 'Период и условия покупки', body: 'Сколько дней родители могут оформить заказ и минимальная сумма заказа.' },
+    { route: '/templates/1', sel: 'section.asb__block', text: 'Печать', title: 'Печать и цены', body: 'Форматы печати и цены для общего фото и отдельных кадров.' },
+    { route: '/templates/1', sel: 'section.asb__block', text: 'Продукция', title: 'Продукция', body: 'Магниты, кружки, пазлы, календари — всё, что студия предлагает помимо печати.' },
+    { route: '/templates/1', sel: 'section.asb__block', text: 'Электронные фото', title: 'Электронные фото', body: 'Продажа электронных копий, в том числе всех фото пакетом.' },
+    { route: '/templates/1', sel: 'section.asb__block', text: 'Акции', title: 'Акции', body: 'Подарок, когда в заказе набирается нужное количество, — настраивается прямо в шаблоне.' },
+    { route: '/themes', sel: 'main section.page-panel', title: 'Тематики', body: 'Тематики задают оформление съёмки: обложку и примеры фотографий, которые увидят родители.' },
+  ] },
+  { id: 'results', title: 'Заказы и цифры', steps: [
+    { route: '/orders', sel: 'main section.page-panel', title: 'Заказы', body: 'Все заказы родителей в одной таблице: учреждение, альбом, клиент, статус оплаты и выдачи.' },
+    { route: '/dashboard', sel: '.filter-bar', title: 'Период и фильтры', body: 'Дашборд руководителя. Выберите период и тип учреждения — показатели пересчитаются сразу.' },
+    { route: '/dashboard', sel: '.kpi-card', title: 'Выручка, заказы, средний чек', body: 'Главные показатели студии за выбранный период — в первых карточках.' },
+    { route: '/dashboard', sel: '.top-themes', title: 'Топ тематик', body: 'Какие тематики приносят больше по среднему чеку — подсказка, что предлагать учреждениям снова.' },
+    { route: '/dashboard', sel: '.staff-card', title: 'Топ сотрудников', body: 'Результаты команды на одном экране: средний чек и выкуп по каждому фотографу.' },
+    { route: '/dashboard', sel: '.revenue-chart-root', title: 'Динамика выручки', body: 'Выручка по дням месяца и сравнение с планом.' },
+    { route: '/finance', sel: '.fin__bal-card', title: 'Баланс компании', body: 'Сколько денег на балансе студии сейчас.' },
+    { route: '/finance', sel: '.fin__card', text: 'Последние операции', title: 'Операции', body: 'Поступления и списания с полной историей в разделе «Финансы».' },
+  ] },
+];
+const icons = { sessions: CalendarDays, albums: FolderHeart, templates: LayoutTemplate, results: ChartNoAxesCombined };
+---
+<div class="cg" data-cabinet-guide>
+  <div class="cg-chapters" role="list" aria-label="Разделы инструкции">
+    {chapters.map((c, i) => { const Icon = icons[c.id as keyof typeof icons]; return (
+      <button type="button" role="listitem" class="cg-chapter" data-chapter={i}><span class="cg-chapter-icon"><Icon size={18}/></span><span><small>{c.steps.length} шагов</small>{c.title}</span></button>
+    ); })}
+  </div>
+
+  <div class="cg-frame">
+    <div class="cg-chrome" aria-hidden="true"><i></i><i></i><i></i><span data-crumb>Кабинет ФотоКонтур</span></div>
+    <div class="cg-stage" data-stage>
+      <iframe data-cabinet src="/demo/cabinet/index.html#/photosessions" title="Кликабельный прототип кабинета ФотоКонтур" loading="lazy"></iframe>
+      <div class="cg-loading" data-loading><span></span>Загружаем кабинет…</div>
+      <div class="cg-mask" data-mask hidden><div class="cg-spot" data-spot></div></div>
+      <div class="cg-tip" data-tip hidden role="dialog" aria-live="polite" aria-label="Инструкция по сервису">
+        <div class="cg-tip-head"><span data-tip-chapter></span><button type="button" class="cg-tip-close" data-guide-close aria-label="Закрыть инструкцию"><X size={17}/></button></div>
+        <strong data-tip-title></strong>
+        <p data-tip-body></p>
+        <div class="cg-tip-progress"><span data-tip-progress></span></div>
+        <p class="cg-tip-nextch" data-tip-nextch hidden></p>
+        <div class="cg-tip-foot">
+          <span class="cg-tip-count" data-tip-count></span>
+          <div>
+            <button type="button" class="cg-tip-btn" data-guide-prev aria-label="Назад"><ArrowLeft size={17}/></button>
+            <button type="button" class="cg-tip-btn cg-tip-next" data-guide-next><span data-next-label>Далее</span><ArrowRight size={17}/></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="application/json" data-guide-chapters set:html={JSON.stringify(chapters)} />
+
+<style>
+.cg-bar{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:16px}
+.cg-bar-copy strong{display:block;font-size:20px;letter-spacing:-.02em}.cg-bar-copy span{font-size:13px;color:var(--muted)}
+.cg-start{background:var(--orange);box-shadow:0 14px 30px -14px #767676b3}.cg-start:hover{background:#656565}
+.cg-chapters{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
+.cg-chapter{min-width:0;display:flex;align-items:center;gap:12px;text-align:left;padding:12px 14px;border-radius:14px;border:1px solid var(--line);background:var(--paper);font-size:14px;font-weight:700;transition:border-color .2s,transform .2s,box-shadow .2s}
+.cg-chapter:hover{border-color:#c1c1c1;transform:translateY(-2px);box-shadow:0 12px 26px -20px #171717}
+.cg-chapter.is-current{border-color:var(--steel);box-shadow:0 0 0 3px #86868626}
+.cg-chapter small{display:block;font-size:11px;font-weight:600;color:var(--muted)}
+.cg-chapter-icon{display:grid;place-items:center;width:36px;height:36px;border-radius:10px;background:#ebebeb;color:#616161;flex:none}
+.cg-frame{border-radius:22px;overflow:hidden;border:1px solid #d5d5d5;background:#ffffff;box-shadow:0 40px 80px -50px #17171799}
+.cg-chrome{display:flex;align-items:center;gap:7px;height:40px;padding:0 16px;background:#eeeeee;border-bottom:1px solid #dedede;font-size:12px;color:var(--muted)}
+.cg-chrome i{width:10px;height:10px;border-radius:50%;background:#d4d4d4}.cg-chrome i:first-child{background:#b2b2b2}
+.cg-chrome span{margin-left:12px;padding:4px 12px;border-radius:8px;background:#ffffff;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cg-stage{position:relative;height:min(820px,calc(100vh - 160px));min-height:520px;overflow:hidden;background:#f2f2f2}
+.cg-stage iframe{display:block;width:100%;height:100%;border:0;opacity:0;transition:opacity .4s;transform-origin:0 0}
+.cg-stage.is-ready iframe{opacity:1}
+.cg-loading{position:absolute;inset:0;display:grid;place-content:center;justify-items:center;gap:14px;font-size:14px;color:var(--muted)}
+.cg-loading span{width:34px;height:34px;border-radius:50%;border:3px solid #dbdbdb;border-top-color:var(--steel);animation:cg-spin .8s linear infinite}
+.cg-stage.is-ready .cg-loading{display:none}
+.cg-mask{position:absolute;inset:0;pointer-events:none;z-index:2}
+.cg-spot{position:absolute;border-radius:14px;box-shadow:0 0 0 9999px #1818188c,0 0 0 3px #767676,0 0 26px 6px #76767666;transition:left .45s cubic-bezier(.3,.8,.3,1),top .45s cubic-bezier(.3,.8,.3,1),width .45s cubic-bezier(.3,.8,.3,1),height .45s cubic-bezier(.3,.8,.3,1),opacity .3s}
+.cg-spot.is-none{box-shadow:0 0 0 9999px #1818188c;width:0!important;height:0!important}
+.cg-tip{position:absolute;z-index:3;width:min(360px,calc(100% - 24px));overflow-wrap:break-word;padding:18px 18px 16px;border-radius:18px;background:#ffffff;color:var(--ink);box-shadow:0 24px 60px -18px #181818cc;transition:left .45s cubic-bezier(.3,.8,.3,1),top .45s cubic-bezier(.3,.8,.3,1);animation:cg-tip-in .35s ease}
+.cg-tip-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px}
+.cg-tip-head span{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--orange)}
+.cg-tip-close{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;border:0;background:#f3f3f3}
+.cg-tip strong{display:block;font-size:18px;line-height:1.3;letter-spacing:-.02em}
+.cg-tip p{margin-top:8px;font-size:14px;line-height:1.55;color:var(--muted)}
+.cg-tip-progress{height:4px;border-radius:4px;background:#ececec;margin:16px 0 12px;overflow:hidden}
+.cg-tip-progress span{display:block;height:100%;width:0;background:var(--orange);border-radius:4px;transition:width .4s}
+.cg-tip-foot{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.cg-tip-foot>div{display:flex;gap:8px;flex:none}
+.cg-tip-nextch{margin:-4px 0 12px!important;font-size:12px!important;font-weight:700;color:var(--ink)!important}
+.cg-tip-count{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.cg-tip-btn{white-space:nowrap;flex:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-width:40px;height:40px;padding:0 12px;border-radius:11px;border:1px solid var(--line);background:#ffffff;font-size:14px;font-weight:700}
+.cg-tip-btn:disabled{opacity:.35}
+.cg-tip-next{background:var(--ink);border-color:var(--ink);color:#ffffff;padding:0 16px}
+.cg-tip-next:hover{background:#393939}
+.cg-foot{display:flex;justify-content:space-between;align-items:start;gap:20px;margin-top:14px}
+.cg-foot p{font-size:13px;color:var(--muted);max-width:760px}
+.cg-foot-actions{display:flex;gap:18px;flex-wrap:wrap}
+.cg-reset{display:inline-flex;align-items:center;gap:7px;border:0;background:none;font-size:13px;font-weight:700;color:var(--muted);white-space:nowrap}.cg-reset:hover{color:var(--ink)}
+@keyframes cg-spin{to{transform:rotate(360deg)}}
+@keyframes cg-tip-in{from{opacity:0;transform:translateY(8px)}}
+@media(max-width:1100px){.cg-chapters{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:760px){
+  .cg-bar{flex-direction:column;align-items:stretch}.cg-start{width:100%}
+  .cg-chapters{grid-template-columns:1fr 1fr;gap:8px}.cg-chapter{padding:10px;font-size:13px;gap:8px}.cg-chapter-icon{width:30px;height:30px}
+  .cg-stage{height:72vh;min-height:520px}
+  .cg-tip{width:auto;left:10px!important;right:10px;top:auto!important;bottom:10px}
+  .cg-foot{flex-direction:column}
+}
+@media(prefers-reduced-motion:reduce){.cg-spot,.cg-tip{transition:none}}
+</style>
+
+<script>
+  type Step={route:string;sel:string;text?:string;alt?:string;title:string;body:string};
+  type Chapter={id:string;title:string;steps:Step[]};
+  const sleep=(ms:number)=>new Promise(r=>setTimeout(r,ms));
+  const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  document.querySelectorAll<HTMLElement>('[data-cabinet-guide]').forEach(root=>{
+    const chapters:Chapter[]=JSON.parse(root.parentElement!.querySelector('[data-guide-chapters]')!.textContent!);
+    const frame=root.querySelector<HTMLIFrameElement>('[data-cabinet]')!;
+    const stage=root.querySelector<HTMLElement>('[data-stage]')!;
+    const mask=root.querySelector<HTMLElement>('[data-mask]')!;
+    const spot=root.querySelector<HTMLElement>('[data-spot]')!;
+    const tip=root.querySelector<HTMLElement>('[data-tip]')!;
+    const crumb=root.querySelector<HTMLElement>('[data-crumb]')!;
+    const $=(s:string)=>root.querySelector<HTMLElement>(s)!;
+    const chapterBtns=[...root.querySelectorAll<HTMLButtonElement>('[data-chapter]')];
+    // Сквозной список шагов: «Инструкция по сервису» проходит все разделы подряд.
+    const flat=chapters.flatMap((c,ci)=>c.steps.map((s,si)=>({...s,ci,si})));
+    let index=-1,target:HTMLElement|null=null,raf=0,token=0,scale=1;
+    // Прототип не адаптирован уже ~1000px: на узких экранах показываем его в настольной ширине с уменьшением.
+    const DESIGN_WIDTH=1100;
+    function fit(){
+      const w=stage.clientWidth,h=stage.clientHeight;
+      scale=w<900?w/DESIGN_WIDTH:1;
+      Object.assign(frame.style,scale<1?{width:`${DESIGN_WIDTH}px`,height:`${h/scale}px`,transform:`scale(${scale})`}:{width:'',height:'',transform:''});
+    }
+    fit();
+    new ResizeObserver(fit).observe(stage);
+
+    const win=()=>frame.contentWindow as (Window&typeof globalThis)|null;
+    const doc=()=>frame.contentDocument;
+
+    // Демо от лица руководителя: роль фиксируется, переключатель в шапке не реагирует.
+    function prepareCabinet(){
+      const d=doc(); if(!d)return false;
+      const app=(d.querySelector('#app') as any)?.__vue_app__;
+      const role=app?.config?.globalProperties?.$pinia?._s?.get('role');
+      if(!role)return false;
+      role.set('head');
+      role.set=()=>{};
+      if(!d.getElementById('guide-lock')){
+        const st=d.createElement('style');st.id='guide-lock';
+        st.textContent='.app-header__role-trigger{pointer-events:none}';
+        d.head.append(st);
+      }
+      return true;
+    }
+    async function onLoad(){
+      for(let i=0;i<40&&!prepareCabinet();i++)await sleep(100);
+      stage.classList.add('is-ready');
+      setTimeout(updateCrumb,400);
+      win()?.addEventListener('hashchange',updateCrumb);
+    }
+    frame.addEventListener('load',onLoad);
+
+    function updateCrumb(){
+      const t=(doc()?.querySelector('.app-header__left') as HTMLElement|null)?.innerText?.split(/\n+/).map(x=>x.trim()).filter(Boolean).join(' · ');
+      crumb.textContent=t?`Кабинет ФотоКонтур · ${t}`:'Кабинет ФотоКонтур';
+    }
+
+    function findTarget(step:Step){
+      const d=doc(); if(!d)return null;
+      // Видимым считаем элемент, который не уехал за край (например, меню, спрятанное за бургер).
+      const visible=(e:HTMLElement)=>{const r=e.getBoundingClientRect();return r.width>0&&r.height>0&&r.right>0&&r.left<d.documentElement.clientWidth};
+      const list=[...d.querySelectorAll<HTMLElement>(step.sel)].filter(e=>!step.text||e.textContent!.includes(step.text));
+      const alt=step.alt?[...d.querySelectorAll<HTMLElement>(step.alt)]:[];
+      return list.find(visible)??alt.find(visible)??null;
+    }
+    // Прокрутка внутри кабинета без прокрутки самой страницы сайта.
+    // Если плавная прокрутка не доехала (вкладка в фоне, reduced motion), докручиваем мгновенно.
+    async function bringIntoView(el:HTMLElement){
+      const w=win()!;
+      let box:Element|null=null;
+      for(let p=el.parentElement;p&&p!==doc()!.body;p=p.parentElement){
+        const cs=w.getComputedStyle(p);
+        if(/(auto|scroll)/.test(cs.overflowY)&&p.scrollHeight>p.clientHeight+4){box=p;break}
+      }
+      const er=el.getBoundingClientRect();
+      const top=box?box.getBoundingClientRect().top:0;
+      const height=box?box.clientHeight:w.innerHeight;
+      const current=box?box.scrollTop:w.scrollY;
+      const goal=Math.max(0,current+er.top-top-Math.max(16,(height-Math.min(er.height,height))/2));
+      if(Math.abs(goal-current)<4)return;
+      const scroller=box??w;
+      scroller.scrollTo({top:goal,behavior:reduce?'auto':'smooth'});
+      await sleep(reduce?50:450);
+      const now=box?box.scrollTop:w.scrollY;
+      if(Math.abs(now-goal)>8)scroller.scrollTo({top:goal,behavior:'instant'});
+    }
+
+    function place(){
+      const sw=stage.clientWidth,sh=stage.clientHeight,pad=6;
+      let r={left:sw/2,top:sh/2,width:0,height:0};
+      if(target&&target.isConnected){
+        const raw=target.getBoundingClientRect();
+        const b={left:raw.left*scale,top:raw.top*scale,right:raw.right*scale,bottom:raw.bottom*scale};
+        const l=Math.max(4,b.left-pad),t=Math.max(4,b.top-pad);
+        r={left:l,top:t,width:Math.max(0,Math.min(sw-4,b.right+pad)-l),height:Math.max(0,Math.min(sh-4,b.bottom+pad)-t)};
+      }
+      spot.classList.toggle('is-none',!target||!r.width||!r.height);
+      Object.assign(spot.style,{left:`${r.left}px`,top:`${r.top}px`,width:`${r.width}px`,height:`${r.height}px`});
+      if(window.matchMedia('(max-width:760px)').matches)return;
+      const tw=tip.offsetWidth,th=tip.offsetHeight,gap=16;
+      let x:number,y:number;
+      if(!target){x=(sw-tw)/2;y=(sh-th)/2}
+      else if(r.left+r.width+gap+tw<sw-8){x=r.left+r.width+gap;y=r.top}
+      else if(r.top+r.height+gap+th<sh-8){x=r.left;y=r.top+r.height+gap}
+      else if(r.top-gap-th>8){x=r.left;y=r.top-gap-th}
+      else if(r.left-gap-tw>8){x=r.left-gap-tw;y=r.top}
+      else{
+        // Места нет ни с одной стороны: ставим в угол той половины, где свободнее.
+        const below=sh-(r.top+r.height),above=r.top;
+        x=sw-tw-16;y=below>=above?sh-th-16:16;
+      }
+      x=Math.min(Math.max(12,x),sw-tw-12);y=Math.min(Math.max(12,y),sh-th-12);
+      tip.style.left=`${x}px`;tip.style.top=`${y}px`;
+    }
+    function loop(){place();raf=requestAnimationFrame(loop)}
+
+    async function show(i:number){
+      if(i<0||i>=flat.length)return;
+      const my=++token;
+      index=i;
+      const step=flat[i];
+      const w=win(); if(!w)return;
+      const want='#'+step.route;
+      if(w.location.hash!==want){w.location.hash=want;await sleep(350)}
+      let el:HTMLElement|null=null;
+      for(let k=0;k<30&&!(el=findTarget(step));k++)await sleep(100);
+      if(my!==token)return;
+      target=el;
+      if(el)await bringIntoView(el)
+      if(my!==token)return;
+      const ch=chapters[step.ci];
+      $('[data-tip-chapter]').textContent=ch.title;
+      $('[data-tip-title]').textContent=step.title;
+      $('[data-tip-body]').textContent=step.body;
+      $('[data-tip-count]').textContent=`${step.si+1} / ${ch.steps.length}`;
+      $('[data-tip-progress]').style.width=`${(step.si+1)/ch.steps.length*100}%`;
+      (root.querySelector('[data-guide-prev]') as HTMLButtonElement).disabled=i===0;
+      const last=i===flat.length-1,lastInChapter=step.si===ch.steps.length-1;
+      $('[data-next-label]').textContent=last?'Завершить':'Далее';
+      const nextCh=$('[data-tip-nextch]');
+      nextCh.hidden=last||!lastInChapter;
+      if(!last&&lastInChapter)nextCh.textContent=`Следующий раздел: ${chapters[step.ci+1].title}`;
+      chapterBtns.forEach((b,n)=>b.classList.toggle('is-current',n===step.ci));
+      mask.hidden=false;tip.hidden=false;
+      tip.style.animation='none';void tip.offsetWidth;tip.style.animation='';
+      updateCrumb();
+      place();
+      if(!raf)loop();
+      keepStageInView();
+    }
+    // Кабинет должен целиком помещаться в окне, иначе подсказка у нижних блоков уходит за край.
+    function keepStageInView(){
+      const header=document.querySelector('header')?.getBoundingClientRect().bottom??0;
+      const frameBox=root.querySelector<HTMLElement>('.cg-frame')!.getBoundingClientRect();
+      if(frameBox.top<header-1||frameBox.bottom>window.innerHeight+1){
+        const goal=window.scrollY+frameBox.top-header-12;
+        window.scrollTo({top:goal,behavior:reduce?'auto':'smooth'});
+        setTimeout(()=>{if(Math.abs(window.scrollY-goal)>8)window.scrollTo({top:goal,behavior:'instant'})},600);
+      }
+    }
+    function close(){
+      token++;index=-1;target=null;
+      mask.hidden=true;tip.hidden=true;
+      cancelAnimationFrame(raf);raf=0;
+      chapterBtns.forEach(b=>b.classList.remove('is-current'));
+    }
+    function start(ci:number){
+      if(!stage.classList.contains('is-ready'))return;
+      show(flat.findIndex(s=>s.ci===ci));
+    }
+
+    chapterBtns.forEach((b,n)=>b.addEventListener('click',()=>start(n)));
+    $('[data-guide-next]').addEventListener('click',()=>index>=flat.length-1?close():show(index+1));
+    $('[data-guide-prev]').addEventListener('click',()=>show(index-1));
+    $('[data-guide-close]').addEventListener('click',close);
+    document.addEventListener('keydown',e=>{
+      if(index<0)return;
+      if(e.key==='Escape')close();
+      if(e.key==='ArrowRight')$('[data-guide-next]').click();
+      if(e.key==='ArrowLeft'&&index>0)show(index-1);
+    });
+  });
+</script>

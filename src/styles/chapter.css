@@ -1,0 +1,147 @@
+.product-chapter {
+  background: #fbfbfb;
+  border-block: 1px solid #ebebeb;
+}
+
+.chapter-layout {
+  display: grid;
+  grid-template-columns: minmax(0, .93fr) minmax(0, 1.07fr);
+  align-items: center;
+  gap: clamp(40px, 5vw, 86px);
+}
+
+.chapter-copy {
+  min-width: 0;
+}
+
+.chapter-copy h2 {
+  max-width: 650px;
+  font-size: clamp(29px, 2.86vw, 43px);
+  line-height: 1.08;
+  letter-spacing: -.055em;
+}
+
+.chapter-copy .lead {
+  max-width: 530px;
+  margin-top:23px;
+  font-size: 17px;
+  line-height: 1.65;
+}
+
+.chapter-points {
+  list-style: none;
+  padding:0;
+  margin: 38px 0 28px;
+  border-top: 1px solid #e3e3e3;
+}
+
+.chapter-points li {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding:14px 0;
+  border-bottom: 1px solid #e3e3e3;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #585858;
+}
+
+.chapter-points svg {
+  flex: none;
+  margin-top:1px;
+  color: var(--steel);
+}
+
+.chapter-points b {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.chapter-link {
+  font-size: 13px;
+}
+
+.chapter-screen {
+  min-width: 0;
+}
+
+.chapter-screen .product {
+  width: 100%;
+  max-width: 620px;
+  margin: 0 0 0 auto;
+  box-shadow: 0 20px 50px #43434317;
+}
+
+.chapter-screen .product img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: auto;
+  object-fit: contain;
+}
+
+.chapter-screen .product figcaption {
+  padding:11px 15px 13px;
+}
+
+@media (max-width: 950px) {
+  .chapter-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
+  }
+
+  .chapter-copy h2,
+  .chapter-copy .lead {
+    max-width: 720px;
+  }
+
+  .chapter-points {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 15px;
+    border-top: 0;
+    margin: 30px 0 24px;
+  }
+
+  .chapter-points li {
+    border: 1px solid #e3e3e3;
+    border-radius: 12px;
+    padding:15px;
+    background: #ffffff;
+    font-size: 12px;
+  }
+
+  .chapter-screen .product {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 620px) {
+  .chapter-copy h2 {
+    font-size: clamp(28px, 6.8vw, 34px);
+  }
+
+  .chapter-copy .lead {
+    font-size: 15px;
+  }
+
+  .chapter-points {
+    display: block;
+    margin: 26px 0 20px;
+    border-top: 1px solid #e3e3e3;
+  }
+
+  .chapter-points li {
+    padding:12px 0;
+    border: 0;
+    border-bottom: 1px solid #e3e3e3;
+    border-radius: 0;
+    background: transparent;
+    font-size: 13px;
+  }
+
+  .chapter-screen .product {
+    border-radius: 14px;
+  }
+}
