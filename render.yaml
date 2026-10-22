@@ -3,7 +3,7 @@ services:
   - type: web
     name: photokontur-site
     runtime: static
-    buildCommand: corepack enable && pnpm install --frozen-lockfile && pnpm build
+    buildCommand: npx -y pnpm@11.25.0 install --frozen-lockfile && npx -y pnpm@11.25.0 build
     staticPublishPath: ./dist
     envVars:
       - key: NODE_VERSION
