@@ -16,9 +16,9 @@ const mesh = 'M33 48L38 57L50 70L62 57L67 48M38 57L62 57M50 70L41 82L50 94L59 82
   <div class="vision-backdrop" aria-hidden="true"><div class="ph ph--dark ph--fill ph--corner"><span>Фоновое изображение · распознавание лиц</span></div></div>
   <div class="wrap vision-layout">
     <div class="vision-copy">
-      <span class="vision-eyebrow"><ScanFace size={19}/> Главное преимущество сервиса <b>·</b> VK Vision</span>
-      <h2 id="vision-title">Узнать лицо.<br/><em>Собрать персональный альбом.</em></h2>
-      <p>После общей съёмки фотограф загружает кадры и задаёт образец лица. Сценарий распознавания сопоставляет лица на снимках и группирует фотографии в персональные папки детей.</p>
+      <span class="vision-eyebrow"><ScanFace size={19}/> Персональные альбомы</span>
+      <h2 id="vision-title">Каждый ребёнок —<br/><em>в своём альбоме.</em></h2>
+      <p>Загрузите кадры общей съёмки — сервис сам найдёт ребёнка на фотографиях и соберёт его альбом. Перебирать сотни снимков вручную не нужно.</p>
       <div class="vision-verification"><span></span><div><strong>Фотограф сохраняет контроль:</strong> спорные кадры можно проверить перед публикацией.</div></div>
     </div>
 
@@ -61,6 +61,7 @@ const mesh = 'M33 48L38 57L50 70L62 57L67 48M38 57L62 57M50 70L41 82L50 94L59 82
     </div>
   </div>
 
+  {/* Схема из трёх шагов скрыта: блок сокращён
   <div class="wrap vision-bottom">
     <div class="vision-flow" aria-label="Как формируются персональные папки">
       <div class="vision-step" data-step="0"><span class="vision-step-icon"><Images size={28}/></span><div><small>Загрузить</small><strong>Кадры съёмки</strong></div><span class="vision-step-bar"></span></div>
@@ -70,6 +71,7 @@ const mesh = 'M33 48L38 57L50 70L62 57L67 48M38 57L62 57M50 70L41 82L50 94L59 82
       <div class="vision-step" data-step="2"><span class="vision-step-icon"><FolderHeart size={28}/></span><div><small>Проверить</small><strong>Папки детей</strong></div><span class="vision-step-bar"></span></div>
     </div>
   </div>
+  */}
 </section>
 
 <style>
@@ -200,7 +202,7 @@ const mesh = 'M33 48L38 57L50 70L62 57L67 48M38 57L62 57M50 70L41 82L50 94L59 82
         s.classList.remove('is-active');
         s.classList.toggle('is-done',n<i);
       });
-      if(i<0)return;
+      if(i<0||!steps[i])return;
       steps[i].style.setProperty('--step-time',`${time}ms`);
       void steps[i].offsetWidth;
       steps[i].classList.add('is-active');

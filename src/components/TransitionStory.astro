@@ -1,0 +1,42 @@
+---
+// «Реальный опыт перехода и помощь»: история команды без названия студии. Факты — из задания заказчика
+// (17 лет в сюжетной фотографии, сопротивление учреждений, меньше претензий, порядок в учёте). Цифр результата нет.
+import { ArrowUpRight } from '@lucide/astro';
+const path = [
+  { t: 'Было', p: 'Пробники, бумажные списки и сбор денег через воспитателей. Претензии родителей и путаница в заказах.' },
+  { t: 'Переход', p: 'Сначала сопротивлялись заведующие, методисты и воспитатели: новая схема казалась сложнее привычной.' },
+  { t: 'Стало', p: 'Родители видят снимки до покупки, претензий меньше, а заказы и деньги учтены и понятны учреждению.' },
+];
+---
+<section class="section transition" aria-labelledby="transition-title">
+  <div class="wrap tr-layout">
+    <div class="tr-copy">
+      <span class="eyebrow">Наш опыт</span>
+      <h2 id="transition-title">Мы 17 лет снимаем в садах и школах.<br/><em>И сами прошли этот переход.</em></h2>
+      <p class="lead">ФотоКонтур сделали фотографы, которые работали по той же схеме, что и вы. Мы знаем, как объяснить переход заведующей и методисту, — и поможем вам с вашими учреждениями.</p>
+      <div class="tr-actions">
+        <a class="btn" href="#apply">Обсудить переход<ArrowUpRight size={18}/></a>
+        <a class="text-link" href="/reviews/">Читать историю целиком<ArrowUpRight size={18}/></a>
+      </div>
+    </div>
+    <ol class="tr-path">
+      {path.map((x) => (<li><small>{x.t}</small><p>{x.p}</p></li>))}
+    </ol>
+  </div>
+</section>
+
+<style>
+.transition{background:#eeeeee}
+.tr-layout{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:48px;align-items:start}
+.tr-copy h2{font-size:clamp(28px,2.92vw,44px)}
+.tr-copy h2 em{font-style:normal;color:#5c5c5c}
+.tr-copy .lead{margin-top:18px;max-width:600px}
+.tr-actions{display:flex;align-items:center;gap:22px;flex-wrap:wrap;margin-top:28px}
+.tr-path{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.tr-path li{padding:22px 24px;border-radius:18px;background:var(--paper);border:1px solid var(--line);display:grid;gap:6px}
+.tr-path li:last-child{background:var(--ink);border-color:var(--ink);color:#fff}
+.tr-path small{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.tr-path li:last-child small{color:#bdbdbd}
+.tr-path p{font-size:16px;line-height:1.5}
+@media(max-width:960px){.tr-layout{grid-template-columns:1fr;gap:32px}}
+</style>

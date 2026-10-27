@@ -1,27 +1,26 @@
 ---
-// Преимущество: печать фотографий через сервис. Цена и сроки — из раздела «Печать фото в сервисе»
-// кабинета (fotokontur-main/frontend/src/pages/print-service): 10×15 — 35 ₽, срок 3–5 рабочих дней.
-import { Printer, Wallet, PackageCheck, ArrowUpRight } from '@lucide/astro';
-const points = [
-  { icon: Printer, t: 'Не нужен свой подрядчик', p: 'Не придётся искать типографию или покупать оборудование: фотографии печатает ФотоКонтур.' },
-  { icon: Wallet, t: 'Оплата с баланса студии', p: 'Заказ на печать оплачивается с баланса компании в кабинете — без отдельных счетов.' },
-  { icon: PackageCheck, t: 'Готовый заказ в доставке', p: 'Сервис печатает, упаковывает и передаёт заказ в доставку. Статус виден в разделе «Заказы».' },
+// «Печать без ручной сортировки»: кнопка «Сформировать печать» и два варианта производства.
+// Цена и сроки печати через сервис — из раздела «Печать фото в сервисе» кабинета: 10×15 — 35 ₽, 3–5 рабочих дней.
+import { Download, Printer, ArrowUpRight } from '@lucide/astro';
+const options = [
+  { icon: Download, t: 'Печатаете сами', p: 'Скачиваете готовый пакет и отдаёте в свою лабораторию или печатаете на своём оборудовании.' },
+  { icon: Printer, t: 'Печать через ФотоКонтур', p: 'Передаёте заказы на производство из кабинета. Фотографии напечатают, упакуют и передадут в доставку.' },
 ];
 ---
 <section class="section print" aria-labelledby="print-title">
   <div class="wrap print-layout">
     <div class="print-copy">
-      <span class="eyebrow">Печать в сервисе</span>
-      <h2 id="print-title">Заказы родителей —<br/>сразу на печать.</h2>
-      <p class="lead">Руководитель отправляет фотографии на печать прямо из кабинета: из альбома или карточки учреждения. Искать исполнителя и согласовывать заказ на стороне не нужно.</p>
+      <span class="eyebrow">Печать</span>
+      <h2 id="print-title">Печать<br/><em>без ручной сортировки.</em></h2>
+      <p class="lead">Нажимаете «Сформировать печать» — сервис собирает все оплаченные заказы в пакет, уже разложенный по учреждениям, группам и форматам. Дальше выбираете, как удобнее.</p>
       <ul class="print-points">
-        {points.map((x) => (
+        {options.map((x) => (
           <li><span class="print-icon"><x.icon size={22}/></span><div><strong>{x.t}</strong><p>{x.p}</p></div></li>
         ))}
       </ul>
     </div>
-    <aside class="print-price" aria-label="Стоимость печати">
-      <span class="print-price-label">Фото 10×15</span>
+    <aside class="print-price" aria-label="Стоимость печати через ФотоКонтур">
+      <span class="print-price-label">Печать через ФотоКонтур · 10×15</span>
       <strong class="print-price-value">от 35 ₽</strong>
       <span class="print-price-note">за отпечаток</span>
       <dl>
@@ -36,9 +35,10 @@ const points = [
 <style>
 .print-layout{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(280px,.8fr);gap:48px;align-items:start}
 .print-copy h2{font-size:clamp(28px,2.92vw,44px)}
+.print-copy h2 em{font-style:normal;color:#5c5c5c}
 .print-copy .lead{margin-top:18px;max-width:620px}
-.print-points{list-style:none;margin:28px 0 0;padding:0;display:grid;gap:12px}
-.print-points li{display:flex;gap:16px;padding:18px 20px;background:var(--paper);border:1px solid var(--line);border-radius:18px}
+.print-points{list-style:none;margin:28px 0 0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.print-points li{display:flex;gap:16px;padding:20px;background:var(--paper);border:1px solid var(--line);border-radius:18px}
 .print-icon{flex:none;display:grid;place-items:center;width:44px;height:44px;border-radius:12px;background:var(--bg);color:var(--ink)}
 .print-points strong{display:block;font-size:17px;letter-spacing:-.01em;margin-bottom:4px}
 .print-points p{font-size:15px;line-height:1.55;color:var(--muted)}
@@ -52,4 +52,5 @@ const points = [
 .print-price dd{margin:0;font-weight:700}
 .print-price .btn{justify-self:start;background:#ffffff;color:#141414}
 @media(max-width:900px){.print-layout{grid-template-columns:1fr}.print-price{position:static}}
+@media(max-width:640px){.print-points{grid-template-columns:1fr}}
 </style>

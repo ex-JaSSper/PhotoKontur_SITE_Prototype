@@ -1,19 +1,20 @@
 ---
-import {ArrowUpRight, ChartNoAxesCombined, Target, Images, UsersRound, Expand} from '@lucide/astro';
+import {ArrowUpRight, ChartNoAxesCombined, Images, UsersRound, Expand, School, CalendarDays, KeyRound} from '@lucide/astro';
 
 const signals = [
-  {icon:ChartNoAxesCombined, title:'Средний чек', text:'Смотрите, как меняется стоимость заказа, вместе с выручкой и числом заказов.'},
-  {icon:Target, title:'План продаж', text:'Сопоставляйте результат с планом за месяц и замечайте отклонения вовремя.'},
-  {icon:Images, title:'Топ тематик', text:'Понимайте, какие съёмки востребованы и что стоит предложить клиентам снова.'},
-  {icon:UsersRound, title:'Топ фотографов', text:'В кабинете руководителя сравнивайте результаты команды на одном экране.'},
+  {icon:School, title:'Учреждения и съёмки', text:'Все сады и школы, даты и статусы съёмок — в одном списке.'},
+  {icon:CalendarDays, title:'Календарь', text:'План съёмок виден всей команде.'},
+  {icon:Images, title:'Сюжеты и фотографы', text:'Какие сюжеты продаются лучше и у кого из фотографов больше заказов.'},
+  {icon:ChartNoAxesCombined, title:'Финансы', text:'Выручка, заказы и средний чек за любой период.'},
+  {icon:UsersRound, title:'Роли сотрудников', text:'Каждый видит только то, что нужно для его работы. Права настраиваются.'},
 ];
 ---
 <section class="dashboard-feature" id="dashboard" aria-labelledby="dashboard-title">
   <div class="wrap dashboard-layout">
     <div class="dashboard-copy">
-      <span class="eyebrow">Аналитика</span>
-      <h2 id="dashboard-title">Студия видна<br/><em>в цифрах.</em></h2>
-      <p class="dashboard-lead">Дашборд собирает показатели в одном месте. Оценивайте результат за период, находите сильные направления и принимайте решения о следующих съёмках на основе данных.</p>
+      <span class="eyebrow">Для руководителя студии</span>
+      <h2 id="dashboard-title">Вся студия —<br/><em>на одном экране.</em></h2>
+      <p class="dashboard-lead">Когда учреждений и фотографов становится больше, всё нужное для управления студией собрано в кабинете руководителя. Остальные настройки — в демо.</p>
       <div class="dashboard-signals" aria-label="Что показывает дашборд">
         {signals.map(({icon:Icon,title,text}) => <div class="dashboard-signal"><span class="signal-icon"><Icon size={25} strokeWidth={1.9}/></span><div><h3>{title}</h3><p>{text}</p></div></div>)}
       </div>

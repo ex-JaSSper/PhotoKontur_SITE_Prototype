@@ -8,6 +8,9 @@ import DashboardFeature from '../components/DashboardFeature.astro';
 import WorkflowStory from '../components/WorkflowStory.astro';
 import FeatureExplorer from '../components/FeatureExplorer.astro';
 import PrintService from '../components/PrintService.astro';
+import HowItWorksBrief from '../components/HowItWorksBrief.astro';
+import PaymentInfo from '../components/PaymentInfo.astro';
+import TransitionStory from '../components/TransitionStory.astro';
 import LandingHero from '../components/LandingHero.astro';
 import JournalShowcase from '../components/JournalShowcase.astro';
 import ContactForm from '../components/ContactForm.astro';
@@ -16,16 +19,21 @@ import {ArrowUpRight, Check} from '@lucide/astro';
 import '../styles/home.css';
 import '../styles/chapter.css';
 ---
-<Base title="Меньше рутины. Больше фотографии">
+<Base title="Сюжетные съёмки в садах и школах">
 <LandingHero/>
 <FeatureExplorer/>
+<HowItWorksBrief/>
 <VisionFeature/>
-<DashboardFeature/>
-<section class="section product-chapter" aria-labelledby="sessions-title"><div class="wrap chapter-layout"><div class="chapter-copy"><span class="chapter-number">Организовать</span><h2 id="sessions-title">Весь съёмочный процесс.<br/>Без поиска по перепискам.</h2><p class="lead">Даты, тематики и статусы помогают видеть, что запланировано и что уже в работе.</p><ul class="chapter-points"><li><Check size={19}/><span>Находите нужную съёмку <b>по дате и тематике</b></span></li><li><Check size={19}/><span>Разделяйте этапы <b>по статусу фотосессии</b></span></li><li><Check size={19}/><span>Держите работу <b>в одном контексте</b></span></li></ul><a class="text-link chapter-link" href="/how-it-works/">Посмотреть процесс в демо <ArrowUpRight size={18}/></a></div><div class="chapter-screen"><ProductFigure src="/media/sessions.webp" alt="Полный экран раздела фотосессий со статусами и фильтрами" caption="Раздел «Фотосессии», кабинет суперадминистратора. Данные на снимке демонстрационные."/></div></div></section>
-<PrintService/>
-<WorkflowStory/>
 <ParentJourney/>
-<section class="section wrap" id="journal"><div class="section-head"><div><span class="eyebrow">Блог ФотоКонтур</span><h2>Полезное для работы.<br/>Важное о сервисе.</h2></div><a href="/blog/" class="text-link">Читать блог<ArrowUpRight size={18}/></a></div><JournalShowcase articles={articles.slice(0,3)}/></section>
+{/* Блок «Весь съёмочный процесс» влит в «CRM и аналитика» (DashboardFeature)
+<section class="section product-chapter" aria-labelledby="sessions-title"><div class="wrap chapter-layout"><div class="chapter-copy"><span class="chapter-number">Организовать</span><h2 id="sessions-title">Весь съёмочный процесс.<br/>Без поиска по перепискам.</h2><p class="lead">Даты, тематики и статусы помогают видеть, что запланировано и что уже в работе.</p><ul class="chapter-points"><li><Check size={19}/><span>Находите нужную съёмку <b>по дате и тематике</b></span></li><li><Check size={19}/><span>Разделяйте этапы <b>по статусу фотосессии</b></span></li><li><Check size={19}/><span>Держите работу <b>в одном контексте</b></span></li></ul><a class="text-link chapter-link" href="/how-it-works/">Посмотреть процесс в демо <ArrowUpRight size={18}/></a></div><div class="chapter-screen"><ProductFigure src="/media/sessions.webp" alt="Полный экран раздела фотосессий со статусами и фильтрами" caption="Раздел «Фотосессии», кабинет суперадминистратора. Данные на снимке демонстрационные."/></div></div></section>
+*/}
+<PrintService/>
+<PaymentInfo/>
+<DashboardFeature/>
+{/* <WorkflowStory/> — «Настройте процесс»: подробности перенесены в демо */}
+<TransitionStory/>
+<section class="section wrap" id="journal"><div class="section-head"><div><span class="eyebrow">Блог ФотоКонтур</span><h2>Из практики фотографов.<br/>Сады, школы, родители.</h2></div><a href="/blog/" class="text-link">Читать блог<ArrowUpRight size={18}/></a></div><JournalShowcase articles={articles.slice(0,3)}/></section>
 <ContactForm/>
 <CTA/>
 </Base>
