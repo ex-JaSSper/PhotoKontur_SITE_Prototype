@@ -29,7 +29,7 @@ const nextFig = () => ++fig;
     <div class="wrap">
       <figure class:list={['post-cover', { 'post-cover-photo': photo }]}>
         {photo ? <div class="ph post-cover-ph" role="img" aria-label={a.alt}><span>Обложка статьи · фото</span></div> : <a href={a.cover} target="_blank" rel="noopener" aria-label="Открыть иллюстрацию целиком"><img src={a.cover} alt={a.alt} decoding="async" /></a>}
-        {!photo && <figcaption>Полный экран интерфейса · демонстрационные данные · нажмите, чтобы открыть целиком</figcaption>}
+        {/* {!photo && <figcaption>Полный экран интерфейса · демонстрационные данные · нажмите, чтобы открыть целиком</figcaption>} */}
       </figure>
     </div>
 
