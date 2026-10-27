@@ -24,7 +24,6 @@ import '../styles/chapter.css';
 <FeatureExplorer/>
 {/* <HowItWorksBrief/> — заменён прежним блоком «Настройте процесс» (WorkflowStory) */}
 <VisionFeature/>
-<ParentJourney/>
 {/* Блок «Весь съёмочный процесс» влит в «CRM и аналитика» (DashboardFeature)
 <section class="section product-chapter" aria-labelledby="sessions-title"><div class="wrap chapter-layout"><div class="chapter-copy"><span class="chapter-number">Организовать</span><h2 id="sessions-title">Весь съёмочный процесс.<br/>Без поиска по перепискам.</h2><p class="lead">Даты, тематики и статусы помогают видеть, что запланировано и что уже в работе.</p><ul class="chapter-points"><li><Check size={19}/><span>Находите нужную съёмку <b>по дате и тематике</b></span></li><li><Check size={19}/><span>Разделяйте этапы <b>по статусу фотосессии</b></span></li><li><Check size={19}/><span>Держите работу <b>в одном контексте</b></span></li></ul><a class="text-link chapter-link" href="/how-it-works/">Посмотреть процесс в демо <ArrowUpRight size={18}/></a></div><div class="chapter-screen"><ProductFigure src="/media/sessions.webp" alt="Полный экран раздела фотосессий со статусами и фильтрами" caption="Раздел «Фотосессии», кабинет суперадминистратора. Данные на снимке демонстрационные."/></div></div></section>
 */}
@@ -33,6 +32,7 @@ import '../styles/chapter.css';
 <DashboardFeature/>
 <WorkflowStory/>
 <TransitionStory/>
+<ParentJourney/>
 <section class="section wrap" id="journal"><div class="section-head"><div><span class="eyebrow">Блог ФотоКонтур</span><h2>Из практики фотографов.<br/>Сады, школы, родители.</h2></div><a href="/blog/" class="text-link">Читать блог<ArrowUpRight size={18}/></a></div><JournalShowcase articles={articles.slice(0,3)}/></section>
 <ContactForm/>
 <CTA/>
