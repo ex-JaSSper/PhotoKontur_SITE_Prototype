@@ -22,15 +22,15 @@ import '../styles/chapter.css';
 <Base title="Сюжетные съёмки в садах и школах">
 <LandingHero/>
 <FeatureExplorer/>
-{/* <HowItWorksBrief/> — заменён прежним блоком «Настройте процесс» (WorkflowStory) */}
-<VisionFeature/>
+<TransitionStory/>
+<WorkflowStory/>
+{/* <VisionFeature/> — убран с сайта: про ИИ-распознавание пишем во вкладке «Загрузка» блока WorkflowStory */}
+{/* <HowItWorksBrief/> — его шаги вошли во вкладки WorkflowStory */}
+<ParentJourney/>
 <PrintService/>
 <PaymentInfo/>
 <DashboardFeature/>
 <section class="section product-chapter" aria-labelledby="sessions-title"><div class="wrap chapter-layout"><div class="chapter-copy"><span class="chapter-number">Организовать</span><h2 id="sessions-title">Все съёмки по садам и школам —<br/>в одном списке.</h2><p class="lead">Сервис сам собирает съёмки в список: где и когда снимаете, по какой тематике и на каком этапе работа. Искать это в переписке больше не нужно.</p><ul class="chapter-points"><li><Check size={19}/><span>Находите нужную съёмку <b>по дате и тематике</b></span></li><li><Check size={19}/><span>Разделяйте этапы <b>по статусу фотосессии</b></span></li><li><Check size={19}/><span>Видите все учреждения <b>на одном экране</b></span></li></ul><a class="text-link chapter-link" href="/how-it-works/">Посмотреть процесс в демо <ArrowUpRight size={18}/></a></div><div class="chapter-screen"><ProductFigure src="/media/sessions.webp" alt="Полный экран раздела фотосессий со статусами и фильтрами" caption="Раздел «Фотосессии», кабинет суперадминистратора. Данные на снимке демонстрационные."/></div></div></section>
-<WorkflowStory/>
-<TransitionStory/>
-<ParentJourney/>
 <section class="section wrap" id="journal"><div class="section-head"><div><span class="eyebrow">Блог ФотоКонтур</span><h2>Из практики фотографов.<br/>Сады, школы, родители.</h2></div><a href="/blog/" class="text-link">Читать блог<ArrowUpRight size={18}/></a></div><JournalShowcase articles={articles.slice(0,3)}/></section>
 <ContactForm/>
 <CTA/>
