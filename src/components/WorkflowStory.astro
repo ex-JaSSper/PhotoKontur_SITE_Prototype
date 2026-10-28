@@ -4,33 +4,33 @@ import {ArrowRight, ArrowLeft, CalendarDays, Images, Layers3, LayoutTemplate, Sh
 <section class="work-story" id="workflow" aria-labelledby="work-story-title">
   <div class="wrap">
     <div class="work-story-head">
-      <div><span class="eyebrow">Рабочий путь фотографа</span><h2 id="work-story-title">Настройте процесс.<br/><em>Повторяйте съёмки, а не рутину.</em></h2></div>
+      <div><span class="eyebrow">Как это работает</span><h2 id="work-story-title">Настройте процесс.<br/><em>Повторяйте съёмки, а не рутину.</em></h2></div>
     </div>
 
     <div class="work-story-shell" data-work-story>
       <div class="work-story-tabs" role="tablist" aria-label="Этапы работы">
-        <button type="button" class="is-active" role="tab" id="work-tab-0" aria-selected="true" aria-controls="work-panel-0" tabindex="0" data-story-step="0"><strong>Подготовка</strong><small>Тематика и шаблон</small></button>
-        <button type="button" role="tab" id="work-tab-1" aria-selected="false" aria-controls="work-panel-1" tabindex="-1" data-story-step="1"><strong>Съёмка</strong><small>Календарь и команда</small></button>
-        <button type="button" role="tab" id="work-tab-2" aria-selected="false" aria-controls="work-panel-2" tabindex="-1" data-story-step="2"><strong>Заказ</strong><small>Альбом и выбор</small></button>
+        <button type="button" class="is-active" role="tab" id="work-tab-0" aria-selected="true" aria-controls="work-panel-0" tabindex="0" data-story-step="0"><strong>Съёмка</strong><small>Календарь и учреждение</small></button>
+        <button type="button" role="tab" id="work-tab-1" aria-selected="false" aria-controls="work-panel-1" tabindex="-1" data-story-step="1"><strong>Загрузка</strong><small>Альбомы детей</small></button>
+        <button type="button" role="tab" id="work-tab-2" aria-selected="false" aria-controls="work-panel-2" tabindex="-1" data-story-step="2"><strong>Выбор и оплата</strong><small>Родители и заказ</small></button>
       </div>
 
       <div class="work-story-panels">
         <article class="work-story-panel is-active" id="work-panel-0" role="tabpanel" aria-labelledby="work-tab-0" data-story-panel="0">
-          <div class="work-panel-copy"><h3>Один раз соберите основу для съёмки.</h3><p>Выберите тематику и настройте шаблон альбома: форматы, цены и условия заказа. Сохранённый шаблон можно использовать для следующей фотосессии — не собирать параметры заново.</p><div class="work-takes"><span>Фотограф задаёт сценарий</span><strong>Платформа хранит настройки и подставляет шаблон в новый альбом.</strong></div></div>
-          <div class="work-visual" aria-label="Схема повторного использования тематики и шаблона"><div class="visual-kicker">Схема процесса · без демонстрационных чисел</div><div class="prep-theme"><span><Images size={22}/></span><div><small>ТЕМАТИКА</small><b>Образ съёмки</b><p>Обложка и примеры кадров</p></div><Check size={17}/></div><div class="prep-template"><span><LayoutTemplate size={26}/></span><div><small>СОХРАНЁННЫЙ ШАБЛОН</small><b>Параметры альбома</b><p>Форматы · цены · срок заказа</p></div><Check size={17}/></div><div class="prep-reuse"><RotateCcw size={20}/><span>Использовать снова для новой съёмки</span><ArrowRight size={19}/></div></div>
+          <div class="work-panel-copy"><h3>Проводите съёмку как обычно.</h3><p>Занесите съёмку в календарь: дата, учреждение, тематика. Команда видит план, а настройки сохраняются для следующих съёмок.</p></div>
+          <div class="work-visual calendar-visual" aria-label="Схема календаря съёмок"><div class="calendar-top"><CalendarDays size={29}/><span>Планирование</span><i></i></div><div class="calendar-grid"><span>ПН</span><span>ВТ</span><span>СР</span><span>ЧТ</span><span>ПТ</span><span>СБ</span><span>ВС</span>{Array.from({length:21},(_,i)=><span class:list={['calendar-day',{'has-session':[3,9,15,18].includes(i)}]}>{i+1}</span>)}</div><div class="calendar-status"><span><i></i>Запланировано</span><span><i></i>В работе</span><span><i></i>Готово к выбору</span></div></div>
         </article>
         <article class="work-story-panel" id="work-panel-1" role="tabpanel" aria-labelledby="work-tab-1" data-story-panel="1" aria-hidden="true" inert>
-          <div class="work-panel-copy"><h3>План виден всей команде.</h3><p>Занесите фотосессию в календарь, укажите дату, учреждение и ответственных. Статусы помогают видеть, что готовится, что уже отснято и где нужны следующие действия.</p><div class="work-takes"><span>Фотограф планирует съёмку</span><strong>Платформа держит даты, участников и этапы в одном контексте.</strong></div></div>
-          <div class="work-visual calendar-visual" aria-label="Схема календаря и статусов съёмок"><div class="visual-kicker">Календарь съёмок</div><div class="calendar-top"><CalendarDays size={29}/><span>Планирование</span><i></i></div><div class="calendar-grid"><span>ПН</span><span>ВТ</span><span>СР</span><span>ЧТ</span><span>ПТ</span><span>СБ</span><span>ВС</span>{Array.from({length:21},(_,i)=><span class:list={['calendar-day',{'has-session':[3,9,15,18].includes(i)}]}>{i+1}</span>)}</div><div class="calendar-status"><span><i></i>Запланировано</span><span><i></i>В работе</span><span><i></i>Готово к выбору</span></div></div>
+          <div class="work-panel-copy"><h3>Загрузите фотографии.</h3><p>Сервис разложит кадры по альбомам детей и откроет их родителям. Шаблон с форматами и ценами подставится сам.</p></div>
+          <div class="work-visual" aria-label="Схема повторного использования тематики и шаблона"><div class="prep-theme"><span><Images size={22}/></span><div><small>ТЕМАТИКА</small><b>Образ съёмки</b><p>Обложка и примеры кадров</p></div><Check size={17}/></div><div class="prep-template"><span><LayoutTemplate size={26}/></span><div><small>СОХРАНЁННЫЙ ШАБЛОН</small><b>Параметры альбома</b><p>Форматы · цены · срок заказа</p></div><Check size={17}/></div><div class="prep-reuse"><RotateCcw size={20}/><span>Использовать снова для новой съёмки</span><ArrowRight size={19}/></div></div>
         </article>
         <article class="work-story-panel" id="work-panel-2" role="tabpanel" aria-labelledby="work-tab-2" data-story-panel="2" aria-hidden="true" inert>
-          <div class="work-panel-copy"><h3>Клиент выбирает сам. Заказ остаётся у вас.</h3><p>После загрузки кадров родитель открывает свой альбом, выбирает фотографии и форматы. Состав и статус заказа видны в рабочем пространстве студии — выбор не нужно переносить из переписки вручную.</p><div class="work-takes"><span>Фотограф готовит альбом</span><strong>Платформа связывает клиентский выбор с заказом и его статусом.</strong></div></div>
-          <div class="work-visual order-visual" aria-label="Схема пути от альбома к заказу"><div class="visual-kicker">От альбома к заказу</div><div class="order-album"><div class="order-tiles"><span><Images size={29}/></span><span><Images size={29}/></span><span><Images size={29}/></span></div><p>Альбом открыт для выбора</p></div><div class="order-connector"><ArrowRight size={22}/></div><div class="order-result"><ShoppingBag size={28}/><div><small>ЗАКАЗ В РАБОЧЕМ ПРОСТРАНСТВЕ</small><b>Кадры · форматы · статус</b></div><Check size={18}/></div></div>
+          <div class="work-panel-copy"><h3>Родители выбирают и оплачивают.</h3><p>Родитель смотрит снимки, выбирает фото и размеры и платит онлайн. Заказ сразу появляется у вас — с составом и статусом.</p></div>
+          <div class="work-visual order-visual" aria-label="Схема пути от альбома к заказу"><div class="order-album"><div class="order-tiles"><span><Images size={29}/></span><span><Images size={29}/></span><span><Images size={29}/></span></div><p>Альбом открыт для выбора</p></div><div class="order-connector"><ArrowRight size={22}/></div><div class="order-result"><ShoppingBag size={28}/><div><small>ЗАКАЗ В РАБОЧЕМ ПРОСТРАНСТВЕ</small><b>Кадры · форматы · статус</b></div><Check size={18}/></div></div>
         </article>
       </div>
       <div class="work-story-foot"><span class="work-progress" aria-live="polite" hidden><b data-story-current></b></span><div class="work-controls"><button type="button" data-story-prev aria-label="Предыдущий этап" disabled><ArrowLeft size={19}/></button><button type="button" data-story-next aria-label="Следующий этап"><ArrowRight size={19}/></button></div></div>
     </div>
-    <a href="/how-it-works/" class="work-demo-link">Исследовать рабочее пространство в демо <ArrowUpRight size={19}/></a>
+    <a href="/how-it-works/" class="work-demo-link">Подробнее о настройках — в демо <ArrowUpRight size={19}/></a>
   </div>
 </section>
 <style>
