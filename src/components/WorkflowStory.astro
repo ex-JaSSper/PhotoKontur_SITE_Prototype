@@ -1,5 +1,5 @@
 ---
-import {ArrowRight, ArrowLeft, CalendarDays, Images, Layers3, LayoutTemplate, ShoppingBag, Check, RotateCcw, ArrowUpRight} from '@lucide/astro';
+import {ArrowRight, ArrowLeft, CalendarDays, Images, Layers3, LayoutTemplate, ShoppingBag, Check, RotateCcw, ArrowUpRight, ScanFace, ArrowDown} from '@lucide/astro';
 ---
 <section class="work-story" id="workflow" aria-labelledby="work-story-title">
   <div class="wrap">
@@ -20,8 +20,8 @@ import {ArrowRight, ArrowLeft, CalendarDays, Images, Layers3, LayoutTemplate, Sh
           <div class="work-visual calendar-visual" aria-label="Схема календаря съёмок"><div class="calendar-top"><CalendarDays size={29}/><span>Планирование</span><i></i></div><div class="calendar-grid"><span>ПН</span><span>ВТ</span><span>СР</span><span>ЧТ</span><span>ПТ</span><span>СБ</span><span>ВС</span>{Array.from({length:21},(_,i)=><span class:list={['calendar-day',{'has-session':[3,9,15,18].includes(i)}]}>{i+1}</span>)}</div><div class="calendar-status"><span><i></i>Запланировано</span><span><i></i>В работе</span><span><i></i>Готово к выбору</span></div></div>
         </article>
         <article class="work-story-panel" id="work-panel-1" role="tabpanel" aria-labelledby="work-tab-1" data-story-panel="1" aria-hidden="true" inert>
-          <div class="work-panel-copy"><h3>Загрузите фотографии.</h3><p>Сервис с помощью ИИ сам находит каждого ребёнка на снимках и раскладывает кадры по альбомам — перебирать сотни фото вручную не нужно. Альбомы открываются родителям, шаблон с форматами и ценами подставляется сам.</p></div>
-          <div class="work-visual" aria-label="Схема повторного использования тематики и шаблона"><div class="prep-theme"><span><Images size={22}/></span><div><small>ТЕМАТИКА</small><b>Образ съёмки</b><p>Обложка и примеры кадров</p></div><Check size={17}/></div><div class="prep-template"><span><LayoutTemplate size={26}/></span><div><small>СОХРАНЁННЫЙ ШАБЛОН</small><b>Параметры альбома</b><p>Форматы · цены · срок заказа</p></div><Check size={17}/></div><div class="prep-reuse"><RotateCcw size={20}/><span>Использовать снова для новой съёмки</span><ArrowRight size={19}/></div></div>
+          <div class="work-panel-copy"><h3>Загрузите фотографии.</h3><p>Дальше — без ручной сортировки: ИИ сам разложит кадры по альбомам детей.</p></div>
+          <div class="work-visual ai-visual" aria-label="Схема: ИИ находит детей на снимках и раскладывает кадры по альбомам"><div class="ai-shots"><span class="ai-shot" style="--i:0"><span class="face-ph"></span><i>М</i></span><span class="ai-shot" style="--i:1"><span class="face-ph"></span><i>А</i></span><span class="ai-shot" style="--i:2"><span class="face-ph"></span><i>С</i></span><span class="ai-shot" style="--i:3"><span class="face-ph"></span><i>А</i></span><span class="ai-shot" style="--i:4"><span class="face-ph"></span><i>М</i></span><span class="ai-shot" style="--i:5"><span class="face-ph"></span><i>С</i></span><span class="ai-beam"></span></div><div class="ai-scan"><ScanFace size={18}/><span>ИИ находит каждого ребёнка</span><ArrowDown size={16}/></div><div class="ai-albums"><div class="ai-album" style="--i:0"><div class="ai-album-thumbs"><span class="face-ph"></span><span class="face-ph"></span></div><div><b><i>М</i>Альбом ребёнка</b><small>Открыт родителям</small></div></div><div class="ai-album" style="--i:1"><div class="ai-album-thumbs"><span class="face-ph"></span><span class="face-ph"></span></div><div><b><i>А</i>Альбом ребёнка</b><small>Открыт родителям</small></div></div><div class="ai-album" style="--i:2"><div class="ai-album-thumbs"><span class="face-ph"></span><span class="face-ph"></span></div><div><b><i>С</i>Альбом ребёнка</b><small>Открыт родителям</small></div></div></div></div>
         </article>
         <article class="work-story-panel" id="work-panel-2" role="tabpanel" aria-labelledby="work-tab-2" data-story-panel="2" aria-hidden="true" inert>
           <div class="work-panel-copy"><h3>Родители выбирают и оплачивают.</h3><p>Родитель смотрит снимки, выбирает фото и размеры и платит онлайн. Заказ сразу появляется у вас — с составом и статусом.</p></div>
@@ -57,3 +57,31 @@ import {ArrowRight, ArrowLeft, CalendarDays, Images, Layers3, LayoutTemplate, Sh
     prev.addEventListener('click',()=>show(active-1));next.addEventListener('click',()=>show(active+1));
   });
 </script>
+
+<style>
+.ai-visual{gap:12px}
+.ai-shots{position:relative;display:grid;grid-template-columns:repeat(6,1fr);gap:7px;padding:10px;border-radius:13px;background:#2f2f2f;overflow:hidden}
+.ai-shot{position:relative;border-radius:7px;overflow:hidden;outline:1px solid transparent;outline-offset:-1px}
+.ai-shot .face-ph{background-color:#4a4a4a}
+.ai-shot i,.ai-album b i{display:grid;place-items:center;font-style:normal;font-size:10px;font-weight:800;border-radius:50%;background:#f4f4f4;color:#222}
+.ai-shot i{position:absolute;right:4px;top:4px;width:17px;height:17px;opacity:0;transform:scale(.6)}
+.ai-beam{position:absolute;top:0;bottom:0;left:-20%;width:18%;background:linear-gradient(90deg,transparent,#ffffff2e,transparent);opacity:0}
+.ai-scan{display:flex;align-items:center;justify-content:center;gap:9px;color:#d9d9d9;font-size:12px;font-weight:700}
+.ai-albums{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.ai-album{display:grid;gap:9px;padding:10px;border-radius:12px;background:#f8f8f8;color:#2b2b2b;box-shadow:0 8px 20px #14141432}
+.ai-album-thumbs{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.ai-album-thumbs .face-ph{border-radius:5px;background-color:#cfcfcf;background-image:radial-gradient(circle at 50% 40%,#a9a9a9 0 17%,transparent 17.6%),radial-gradient(ellipse 36% 24% at 50% 100%,#a9a9a9 0 98%,transparent 100%)}
+.ai-album b{display:flex;align-items:center;gap:6px;font-size:12px;line-height:1.2}
+.ai-album b i{flex:none;width:17px;height:17px;background:#222;color:#fff}
+.ai-album small{display:block;font-size:10px;color:#7a7a7a;margin-top:3px}
+.work-story-panel.is-active .ai-beam{animation:ai-beam 1.6s ease-in-out .2s both}
+.work-story-panel.is-active .ai-shot{animation:ai-hit .5s ease-out both;animation-delay:calc(.35s + var(--i) * .17s)}
+.work-story-panel.is-active .ai-shot i{animation:ai-tag .35s ease-out both;animation-delay:calc(.45s + var(--i) * .17s)}
+.work-story-panel.is-active .ai-album{animation:ai-in .5s ease-out both;animation-delay:calc(1.5s + var(--i) * .15s)}
+@keyframes ai-beam{0%{left:-20%;opacity:1}100%{left:105%;opacity:1}}
+@keyframes ai-hit{0%{outline-color:transparent}50%{outline-color:#f4f4f4}100%{outline-color:#f4f4f455}}
+@keyframes ai-tag{to{opacity:1;transform:none}}
+@keyframes ai-in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@media(max-width:700px){.ai-shots{grid-template-columns:repeat(3,1fr)}.ai-album{padding:8px}.ai-album b{font-size:11px}}
+@media(prefers-reduced-motion:reduce){.work-story-panel.is-active .ai-beam,.work-story-panel.is-active .ai-shot,.work-story-panel.is-active .ai-shot i,.work-story-panel.is-active .ai-album{animation:none}.ai-shot i{opacity:1;transform:none}}
+</style>
